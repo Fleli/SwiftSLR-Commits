@@ -1,12 +1,13 @@
 
+var p0 = Production(lhs: "S'", rhs: [.nonTerminal("S")])
+var p1 = Production(lhs: "S", rhs: [.terminal("("), .nonTerminal("L"), .terminal(")")])
+var p2 = Production(lhs: "S", rhs: [.terminal("x")])
+var p3 = Production(lhs: "L", rhs: [.nonTerminal("S")])
+var p4 = Production(lhs: "L", rhs: [.nonTerminal("L"), .terminal(","), .nonTerminal("S")])
 
-var p1 = Production(lhs: "D", rhs: [.nonTerminal("E"), .nonTerminal("F")])
-var p2 = Production(lhs: "E", rhs: [.terminal("y")])
-var p3 = Production(lhs: "E", rhs: [.nonTerminal("F")])
-var p4 = Production(lhs: "F", rhs: [.terminal("x")])
+let grammar = Grammar(p0)
 
-let grammar = Grammar(p1)
-
+grammar.addProduction(p1)
 grammar.addProduction(p2)
 grammar.addProduction(p3)
 grammar.addProduction(p4)

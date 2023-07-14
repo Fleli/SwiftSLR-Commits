@@ -33,6 +33,8 @@ class Production: Equatable, CustomStringConvertible {
     
     var currentSymbol: Symbol? { marker < rhs.count ? rhs[marker] : nil }
     
+    var isReduction: Bool { currentSymbol == nil }
+    
     // TODO: Cache denne når den først er funnet, for den vil brukes svært mange ganger.
     var closure: [Production] {
         

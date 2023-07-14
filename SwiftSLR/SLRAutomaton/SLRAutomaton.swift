@@ -36,21 +36,9 @@ class SLRAutomaton {
         
         let newState = SLRAutomatonState(self, from: closure)
         
+        newState.print(with: 0)
+        
         return newState
-        
-    }
-    
-    func print() {
-        
-        Swift.print("SLR Automaton {")
-        
-        grammar.print(with: 1)
-        
-        Swift.print("\tStates {\n")
-        
-        states.forEach { $0.print(with: 2) }
-        
-        Swift.print("\t}\n\n}")
         
     }
     
@@ -64,6 +52,20 @@ class SLRAutomaton {
         assert(filtered.count < 2, "Expected < 2 matching productions, but found \(filtered.count): \(filtered)")
         
         return filtered.first
+        
+    }
+    
+    func print() {
+        
+        Swift.print("SLR Automaton {")
+        
+        grammar.print(with: 1)
+        
+        Swift.print("\tStates {")
+        
+        states.forEach { $0.print(with: 2) }
+        
+        Swift.print("\t}\n}")
         
     }
     

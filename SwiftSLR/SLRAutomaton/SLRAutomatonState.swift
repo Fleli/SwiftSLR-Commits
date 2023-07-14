@@ -9,12 +9,13 @@ class SLRAutomatonState: Hashable {
     
     private var didGenerate = false
     
-    init(_ slrAutomaton: SLRAutomaton, from initialProduction: Production) {
+    private let isReducing: Bool
+    
+    convenience init(_ slrAutomaton: SLRAutomaton, from initialProduction: Production) {
         
-        self.slrAutomaton = slrAutomaton
-        self.productions = initialProduction.closure
+        let closure = initialProduction.closure
         
-        slrAutomaton.addState(self)
+        self.init(slrAutomaton, from: closure)
         
     }
     
@@ -22,6 +23,8 @@ class SLRAutomatonState: Hashable {
         
         self.slrAutomaton = slrAutomaton
         self.productions = closure
+        
+        self.isReducing = productions.filter {$0.isReduction} .count > 0
         
         slrAutomaton.addState(self)
         
@@ -47,7 +50,8 @@ class SLRAutomatonState: Hashable {
             return
         }
         
-        let otherState = slrAutomaton.fetchState(with: production.withAdvancedMarker())
+        let advancedProduction = production.withAdvancedMarker()
+        let otherState = slrAutomaton.fetchState(with: advancedProduction)
         otherState.generateFullSLRAutomaton()
         
         let transition = SLRAutomatonTransition(self, otherState, transitionSymbol)
@@ -58,22 +62,35 @@ class SLRAutomatonState: Hashable {
     func print(with indentation: Int) {
         
         let prefix = String(repeating: "\t", count: indentation)
+        let isReducingNotification = isReducing ? "(REDUCING)" : ""
         
-        Swift.print(prefix + "State \(id) {\n")
+        Swift.print(prefix + "State \(id) \(isReducingNotification) {")
         
-        Swift.print(prefix + "\tClosure {\n")
-        
-        productions.forEach {
-            Swift.print(prefix + "\t\t\($0)")
+        if (!isReducing) {
+            
+            Swift.print(prefix + "\tClosure {")
+            
+            productions.forEach {
+                Swift.print(prefix + "\t\t\($0)")
+            }
+            
+            Swift.print(prefix + "\t} Transitions {")
+            
+            transitions.forEach {
+                Swift.print(prefix + "\t\t\($0)")
+            }
+            
+            Swift.print(prefix + "\t}")
+            
+        } else {
+            
+            productions.forEach {
+                Swift.print(prefix + "\t\($0)")
+            }
+            
         }
         
-        Swift.print("\n" + prefix + "\t} Transitions {\n")
-        
-        transitions.forEach {
-            Swift.print(prefix + "\t\t\($0)")
-        }
-        
-        Swift.print(prefix + "\n\t\(prefix)}\n")
+        Swift.print(prefix + "}")
         
     }
     
