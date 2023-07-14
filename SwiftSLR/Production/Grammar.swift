@@ -17,6 +17,20 @@ class Grammar {
         
     }
     
+    func print(with indentation: Int = 0) {
+        
+        let prefix = String(repeating: "\t", count: indentation)
+        
+        Swift.print("\n" + prefix + "Grammar {")
+        
+        productions.forEach {
+            Swift.print(prefix + "\t\($0)")
+        }
+        
+        Swift.print(prefix + "}\n")
+        
+    }
+    
     init(_ initialProduction: Production) {
         
         self.initialProduction = initialProduction

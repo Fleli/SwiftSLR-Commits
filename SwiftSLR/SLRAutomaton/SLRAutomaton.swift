@@ -1,5 +1,7 @@
 class SLRAutomaton {
     
+    private static var currentStateID = 0
+    
     private let grammar: Grammar
     
     private var states: [SLRAutomatonState] = []
@@ -16,7 +18,12 @@ class SLRAutomaton {
     }
     
     func addState(_ newState: SLRAutomatonState) {
+        
         states.append(newState)
+        
+        newState.id = Self.currentStateID
+        Self.currentStateID += 1
+        
     }
     
     func fetchState(with initialProduction: Production) -> SLRAutomatonState {
@@ -30,6 +37,20 @@ class SLRAutomaton {
         let newState = SLRAutomatonState(self, from: closure)
         
         return newState
+        
+    }
+    
+    func print() {
+        
+        Swift.print("SLR Automaton {")
+        
+        grammar.print(with: 1)
+        
+        Swift.print("\tStates {\n")
+        
+        states.forEach { $0.print(with: 2) }
+        
+        Swift.print("\t}\n\n}")
         
     }
     

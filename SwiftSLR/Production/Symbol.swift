@@ -1,6 +1,15 @@
-enum Symbol: Equatable {
+enum Symbol: Equatable, CustomStringConvertible {
     
     case terminal(String)
     case nonTerminal(String)
+    
+    var description: String {
+        switch self {
+        case .terminal(let string):
+            return "T(\(string))"
+        case .nonTerminal(let string):
+            return "N(\(string))"
+        }
+    }
     
 }

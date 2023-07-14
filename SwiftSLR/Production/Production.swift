@@ -1,12 +1,39 @@
-class Production: Equatable {
+class Production: Equatable, CustomStringConvertible {
+    
+    var description: String {
+        
+        var rhsString = "[ "
+        
+        for index in 0 ... rhs.count {
+            
+            if index == marker {
+                rhsString.append(". ")
+            }
+            
+            if index < rhs.count {
+                rhsString.append("\(rhs[index])")
+            }
+            
+            rhsString.append(" ")
+            
+        }
+        
+        rhsString.removeLast()
+        rhsString.append("]")
+        
+        return lhs + " -> \(rhsString)"
+        
+    }
     
     weak var grammar: Grammar!
     
     let lhs: String
     let rhs: [Symbol]
+    var marker = 0
     
     var currentSymbol: Symbol? { marker < rhs.count ? rhs[marker] : nil }
     
+    // TODO: Cache denne når den først er funnet, for den vil brukes svært mange ganger.
     var closure: [Production] {
         
         var productionClosure: [Production] = []
@@ -16,8 +43,6 @@ class Production: Equatable {
         return productionClosure
         
     }
-    
-    private var marker = 0
     
     init(lhs: String, rhs: [Symbol]) {
         self.lhs = lhs
@@ -51,7 +76,9 @@ class Production: Equatable {
     }
     
     func withAdvancedMarker() -> Production {
-        return Production(lhs, rhs, marker + 1)
+        let newProduction = Production(lhs, rhs, marker + 1)
+        newProduction.grammar = grammar
+        return newProduction
     }
     
     static func == (lhs: Production, rhs: Production) -> Bool {
