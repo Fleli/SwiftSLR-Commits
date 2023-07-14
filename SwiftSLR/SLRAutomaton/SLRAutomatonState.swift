@@ -2,11 +2,29 @@ class SLRAutomatonState: Hashable {
     
     private weak var slrAutomaton: SLRAutomaton!
     
-    private var productions: [Production]
+    let productions: [Production]
     
-    init(from initialProduction: Production) {
+    init(_ slrAutomaton: SLRAutomaton, from initialProduction: Production) {
         
-        productions = initialProduction.closure
+        self.slrAutomaton = slrAutomaton
+        self.productions = initialProduction.closure
+        
+        slrAutomaton.addState(self)
+        
+    }
+    
+    init(_ slrAutomaton: SLRAutomaton, from closure: [Production]) {
+        
+        self.slrAutomaton = slrAutomaton
+        self.productions = closure
+        
+        slrAutomaton.addState(self)
+        
+    }
+    
+    func generateFullSLRAutomaton() {
+        
+        
         
     }
     

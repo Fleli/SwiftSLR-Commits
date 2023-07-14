@@ -1,4 +1,4 @@
-struct Production {
+class Production: Equatable {
     
     weak var grammar: Grammar!
     

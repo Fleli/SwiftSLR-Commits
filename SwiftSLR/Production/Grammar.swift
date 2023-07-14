@@ -1,8 +1,10 @@
 class Grammar {
     
+    var initialProduction: Production
+    
     private var productions: [Production] = []
     
-    func addProduction(_ production: inout Production) {
+    func addProduction(_ production: Production) {
         
         production.grammar = self
         productions.append(production)
@@ -15,12 +17,12 @@ class Grammar {
         
     }
     
-    init() {
-        print("init grammar")
-    }
-    
-    deinit {
-        print("deinit grammar")
+    init(_ initialProduction: Production) {
+        
+        self.initialProduction = initialProduction
+        
+        addProduction(self.initialProduction)
+        
     }
     
 }
