@@ -4,6 +4,14 @@ class Grammar {
     
     private var productions: [Production] = []
     
+    init(_ initialProduction: Production) {
+        
+        self.initialProduction = initialProduction
+        
+        addProduction(self.initialProduction)
+        
+    }
+    
     func addProduction(_ production: Production) {
         
         production.grammar = self
@@ -28,14 +36,6 @@ class Grammar {
         }
         
         Swift.print(prefix + "}\n")
-        
-    }
-    
-    init(_ initialProduction: Production) {
-        
-        self.initialProduction = initialProduction
-        
-        addProduction(self.initialProduction)
         
     }
     
