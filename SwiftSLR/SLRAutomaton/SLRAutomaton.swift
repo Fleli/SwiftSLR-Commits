@@ -4,7 +4,7 @@ class SLRAutomaton {
     
     private let grammar: Grammar
     
-    private var states: [SLRAutomatonState] = []
+    var states: [SLRAutomatonState] = []
     
     init(_ grammar: Grammar) {
         
@@ -36,14 +36,12 @@ class SLRAutomaton {
         
         let newState = SLRAutomatonState(self, from: closure)
         
-        newState.print(with: 0)
-        
         return newState
         
     }
     
     // TODO: La denne huske tidligere resultater (i en dictionary) slik at den etter hvert blir O(1) i stedet for O(n) for n productions.
-    private func findState(with closure: [Production]) -> SLRAutomatonState? {
+    private func findState(with closure: Set<Production>) -> SLRAutomatonState? {
         
         let filtered = states.filter { $0.productions == closure }
         
@@ -52,20 +50,6 @@ class SLRAutomaton {
         assert(filtered.count < 2, "Expected < 2 matching productions, but found \(filtered.count): \(filtered)")
         
         return filtered.first
-        
-    }
-    
-    func print() {
-        
-        Swift.print("SLR Automaton {")
-        
-        grammar.print(with: 1)
-        
-        Swift.print("\tStates {")
-        
-        states.forEach { $0.print(with: 2) }
-        
-        Swift.print("\t}\n}")
         
     }
     

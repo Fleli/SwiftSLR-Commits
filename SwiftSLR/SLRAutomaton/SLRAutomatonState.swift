@@ -1,15 +1,20 @@
-class SLRAutomatonState: Hashable {
+class SLRAutomatonState: Hashable, CustomStringConvertible {
+    
+    var description: String {
+        return "\(id)"
+    }
     
     private weak var slrAutomaton: SLRAutomaton!
     
     var id = -1
-    let productions: [Production]
+    var productions: Set<Production>
     
-    private var transitions: [SLRAutomatonTransition] = []
+    var transitions: Set<SLRAutomatonTransition> = []
+    let isReducing: Bool
     
     private var didGenerate = false
     
-    private let isReducing: Bool
+    private var stateCache: [Symbol : SLRAutomatonState] = [:]
     
     convenience init(_ slrAutomaton: SLRAutomaton, from initialProduction: Production) {
         
@@ -19,7 +24,7 @@ class SLRAutomatonState: Hashable {
         
     }
     
-    init(_ slrAutomaton: SLRAutomaton, from closure: [Production]) {
+    init(_ slrAutomaton: SLRAutomaton, from closure: Set<Production>) {
         
         self.slrAutomaton = slrAutomaton
         self.productions = closure
@@ -28,9 +33,13 @@ class SLRAutomatonState: Hashable {
         
         slrAutomaton.addState(self)
         
+        Swift.print("init state")
+        
     }
     
     func generateFullSLRAutomaton() {
+        
+        Swift.print("Generate full (\(id))")
         
         if (didGenerate) {
             return
@@ -50,47 +59,35 @@ class SLRAutomatonState: Hashable {
             return
         }
         
+        let otherState: SLRAutomatonState
+        
         let advancedProduction = production.withAdvancedMarker()
-        let otherState = slrAutomaton.fetchState(with: advancedProduction)
-        otherState.generateFullSLRAutomaton()
         
-        let transition = SLRAutomatonTransition(self, otherState, transitionSymbol)
-        transitions.append(transition)
-        
-    }
-    
-    func print(with indentation: Int) {
-        
-        let prefix = String(repeating: "\t", count: indentation)
-        let isReducingNotification = isReducing ? "(REDUCING)" : ""
-        
-        Swift.print(prefix + "State \(id) \(isReducingNotification) {")
-        
-        if (!isReducing) {
+        if let cached = stateCache[transitionSymbol] {
             
-            Swift.print(prefix + "\tClosure {")
+            Swift.print(cached)
             
-            productions.forEach {
-                Swift.print(prefix + "\t\t\($0)")
+            otherState = cached
+            
+            let union = otherState.productions.union(advancedProduction.closure)
+            
+            if union.count > otherState.productions.count {
+                otherState.didGenerate = false
+                otherState.productions = union
             }
-            
-            Swift.print(prefix + "\t} Transitions {")
-            
-            transitions.forEach {
-                Swift.print(prefix + "\t\t\($0)")
-            }
-            
-            Swift.print(prefix + "\t}")
             
         } else {
             
-            productions.forEach {
-                Swift.print(prefix + "\t\($0)")
-            }
+            otherState = slrAutomaton.fetchState(with: advancedProduction)
             
         }
         
-        Swift.print(prefix + "}")
+        otherState.generateFullSLRAutomaton()
+        
+        let transition = SLRAutomatonTransition(self, otherState, transitionSymbol)
+        transitions.insert(transition)
+        
+        stateCache[transitionSymbol] = otherState
         
     }
     

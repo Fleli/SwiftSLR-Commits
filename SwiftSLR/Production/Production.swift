@@ -1,4 +1,4 @@
-class Production: Equatable, CustomStringConvertible {
+class Production: Hashable, CustomStringConvertible {
     
     var description: String {
         
@@ -36,9 +36,9 @@ class Production: Equatable, CustomStringConvertible {
     var isReduction: Bool { currentSymbol == nil }
     
     // TODO: Cache denne når den først er funnet, for den vil brukes svært mange ganger.
-    var closure: [Production] {
+    var closure: Set<Production> {
         
-        var productionClosure: [Production] = []
+        var productionClosure: Set<Production> = []
         
         fillClosure(&productionClosure)
         
@@ -51,19 +51,23 @@ class Production: Equatable, CustomStringConvertible {
         self.rhs = rhs
     }
     
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(lhs)
+    }
+    
     private init(_ lhs: String, _ rhs: [Symbol], _ marker: Int) {
         self.lhs = lhs
         self.rhs = rhs
         self.marker = marker
     }
     
-    private func fillClosure(_ closure: inout [Production]) {
+    private func fillClosure(_ closure: inout Set<Production>) {
         
         if closure.contains(where: {$0 == self} ) {
             return
         }
         
-        closure.append(self)
+        closure.insert(self)
         
         guard let currentSymbol = currentSymbol, case .nonTerminal(let nonTerminal) = currentSymbol else {
             return

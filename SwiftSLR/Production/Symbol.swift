@@ -1,4 +1,4 @@
-enum Symbol: Equatable, CustomStringConvertible {
+enum Symbol: Hashable, CustomStringConvertible {
     
     case terminal(String)
     case nonTerminal(String)

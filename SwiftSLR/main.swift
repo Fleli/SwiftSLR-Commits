@@ -12,7 +12,5 @@ grammar.addProduction(p2)
 grammar.addProduction(p3)
 grammar.addProduction(p4)
 
-p1.closure.forEach { print($0) }
-
 let slr = SLRAutomaton(grammar)
 slr.print()
