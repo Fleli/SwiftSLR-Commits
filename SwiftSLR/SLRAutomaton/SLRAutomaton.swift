@@ -13,14 +13,7 @@ class SLRAutomaton {
         let initialProduction = grammar.initialProduction
         let entryState = SLRAutomatonState(self, from: initialProduction)
         
-        Swift.print("init from:")
-        grammar.print()
-        
         entryState.generateFullSLRAutomaton()
-        
-        states.forEach {
-            $0.print(with: 0)
-        }
         
     }
     

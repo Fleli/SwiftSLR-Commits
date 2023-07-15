@@ -10,6 +10,10 @@
 		080E8C272A59FCF800B23580 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E8C262A59FCF800B23580 /* main.swift */; };
 		080E8C332A5A163700B23580 /* Production.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E8C322A5A163700B23580 /* Production.swift */; };
 		080E8C352A5A16FD00B23580 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E8C342A5A16FD00B23580 /* Symbol.swift */; };
+		0873E5AF2A635FB800E532E7 /* SLRAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873E5AE2A635FB800E532E7 /* SLRAction.swift */; };
+		0873E5B12A63602600E532E7 /* SLRTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873E5B02A63602600E532E7 /* SLRTable.swift */; };
+		0873E5B32A63609300E532E7 /* Table Filling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873E5B22A63609300E532E7 /* Table Filling.swift */; };
+		0873E5B52A6361A100E532E7 /* Token Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873E5B42A6361A100E532E7 /* Token Hashable.swift */; };
 		08EAE4EB2A61C6A700985AC3 /* SLRAutomaton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EAE4EA2A61C6A700985AC3 /* SLRAutomaton.swift */; };
 		08EAE4ED2A61C7CD00985AC3 /* SLRAutomatonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EAE4EC2A61C7CD00985AC3 /* SLRAutomatonState.swift */; };
 		08EAE4EF2A61CB5100985AC3 /* Hash Conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EAE4EE2A61CB5100985AC3 /* Hash Conformance.swift */; };
@@ -40,6 +44,10 @@
 		080E8C2F2A5A001E00B23580 /* Plan.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Plan.md; sourceTree = "<group>"; };
 		080E8C322A5A163700B23580 /* Production.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Production.swift; sourceTree = "<group>"; };
 		080E8C342A5A16FD00B23580 /* Symbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbol.swift; sourceTree = "<group>"; };
+		0873E5AE2A635FB800E532E7 /* SLRAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRAction.swift; sourceTree = "<group>"; };
+		0873E5B02A63602600E532E7 /* SLRTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRTable.swift; sourceTree = "<group>"; };
+		0873E5B22A63609300E532E7 /* Table Filling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Table Filling.swift"; sourceTree = "<group>"; };
+		0873E5B42A6361A100E532E7 /* Token Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Token Hashable.swift"; sourceTree = "<group>"; };
 		08EAE4EA2A61C6A700985AC3 /* SLRAutomaton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRAutomaton.swift; sourceTree = "<group>"; };
 		08EAE4EC2A61C7CD00985AC3 /* SLRAutomatonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRAutomatonState.swift; sourceTree = "<group>"; };
 		08EAE4EE2A61CB5100985AC3 /* Hash Conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hash Conformance.swift"; sourceTree = "<group>"; };
@@ -89,8 +97,19 @@
 				08EAE5052A62D51800985AC3 /* User Input Interpretation */,
 				08EAE4E82A61C69400985AC3 /* Production */,
 				08EAE4E92A61C69C00985AC3 /* SLRAutomaton */,
+				0873E5AD2A635F9B00E532E7 /* SLRTable */,
 			);
 			path = SwiftSLR;
+			sourceTree = "<group>";
+		};
+		0873E5AD2A635F9B00E532E7 /* SLRTable */ = {
+			isa = PBXGroup;
+			children = (
+				0873E5B02A63602600E532E7 /* SLRTable.swift */,
+				0873E5AE2A635FB800E532E7 /* SLRAction.swift */,
+				0873E5B22A63609300E532E7 /* Table Filling.swift */,
+			);
+			path = SLRTable;
 			sourceTree = "<group>";
 		};
 		08EAE4E82A61C69400985AC3 /* Production */ = {
@@ -109,8 +128,8 @@
 				08EAE4EA2A61C6A700985AC3 /* SLRAutomaton.swift */,
 				08EAE4EC2A61C7CD00985AC3 /* SLRAutomatonState.swift */,
 				08EAE4F22A61ECA800985AC3 /* SLRAutomatonTransition.swift */,
-				08EAE4EE2A61CB5100985AC3 /* Hash Conformance.swift */,
 				08EAE4F42A62BA0300985AC3 /* Print functions.swift */,
+				08EAE4EE2A61CB5100985AC3 /* Hash Conformance.swift */,
 			);
 			path = SLRAutomaton;
 			sourceTree = "<group>";
@@ -120,6 +139,7 @@
 			children = (
 				08EAE5062A62D56D00985AC3 /* interpretInput.swift */,
 				08EAE5032A62D47A00985AC3 /* Lexer.swift */,
+				0873E5B42A6361A100E532E7 /* Token Hashable.swift */,
 			);
 			path = "User Input Interpretation";
 			sourceTree = "<group>";
@@ -192,13 +212,17 @@
 			files = (
 				080E8C332A5A163700B23580 /* Production.swift in Sources */,
 				08EAE4EB2A61C6A700985AC3 /* SLRAutomaton.swift in Sources */,
+				0873E5B52A6361A100E532E7 /* Token Hashable.swift in Sources */,
+				0873E5B12A63602600E532E7 /* SLRTable.swift in Sources */,
 				08EAE4EF2A61CB5100985AC3 /* Hash Conformance.swift in Sources */,
 				080E8C272A59FCF800B23580 /* main.swift in Sources */,
 				08EAE50C2A62DC5C00985AC3 /* SLRError.swift in Sources */,
+				0873E5AF2A635FB800E532E7 /* SLRAction.swift in Sources */,
 				08EAE5042A62D47A00985AC3 /* Lexer.swift in Sources */,
 				08EAE4ED2A61C7CD00985AC3 /* SLRAutomatonState.swift in Sources */,
 				08EAE4F32A61ECA800985AC3 /* SLRAutomatonTransition.swift in Sources */,
 				08EAE4F52A62BA0300985AC3 /* Print functions.swift in Sources */,
+				0873E5B32A63609300E532E7 /* Table Filling.swift in Sources */,
 				08EAE5072A62D56D00985AC3 /* interpretInput.swift in Sources */,
 				08EAE50A2A62D59E00985AC3 /* Generator.swift in Sources */,
 				080E8C352A5A16FD00B23580 /* Symbol.swift in Sources */,

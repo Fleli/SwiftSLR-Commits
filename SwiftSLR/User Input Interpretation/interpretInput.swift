@@ -15,9 +15,6 @@ func interpretInput(_ input: String) throws -> [Production] {
         
     }
     
-    print("Returning:")
-    productions.forEach {print($0)}
-    
     return productions
     
 }
