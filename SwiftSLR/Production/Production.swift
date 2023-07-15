@@ -34,6 +34,7 @@ class Production: Hashable, CustomStringConvertible {
     var currentSymbol: Symbol? { marker < rhs.count ? rhs[marker] : nil }
     
     var isReduction: Bool { currentSymbol == nil }
+    var isShift: Bool { !isReduction }
     
     // TODO: Cache denne når den først er funnet, for den vil brukes svært mange ganger.
     var closure: Set<Production> {

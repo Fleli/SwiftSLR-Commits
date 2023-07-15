@@ -21,33 +21,26 @@ extension SLRAutomatonState {
     func print(with indentation: Int) {
         
         let prefix = String(repeating: "\t", count: indentation)
-        let isReducingNotification = isReducing ? "(REDUCING)" : ""
         
-        Swift.print(prefix + "State \(id) \(isReducingNotification) {")
+        let isReducingNotification = isReducing ? "(REDUCING) " : ""
+        let isShiftingNotification = isShifting ? "(SHIFTING) " : ""
         
-        if (!isReducing) {
-            
-            Swift.print(prefix + "\tClosure {")
-            
-            productions.forEach {
-                Swift.print(prefix + "\t\t\($0)")
-            }
-            
-            Swift.print(prefix + "\t} Transitions {")
-            
-            transitions.forEach {
-                Swift.print(prefix + "\t\t\($0)")
-            }
-            
-            Swift.print(prefix + "\t}")
-            
-        } else {
-            
-            productions.forEach {
-                Swift.print(prefix + "\t\($0)")
-            }
-            
+        Swift.print(prefix + "State \(id) \(isReducingNotification)\(isShiftingNotification){")
+        
+        Swift.print(prefix + "\tClosure {")
+        
+        productions.forEach {
+            Swift.print(prefix + "\t\t\($0)")
         }
+        
+        Swift.print(prefix + "\t} Transitions {")
+        
+        transitions.forEach {
+            Swift.print(prefix + "\t\t\($0)")
+        }
+        
+        Swift.print(prefix + "\t}")
+        
         
         Swift.print(prefix + "}")
         

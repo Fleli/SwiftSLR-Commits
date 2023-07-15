@@ -10,7 +10,11 @@ class SLRAutomatonState: Hashable, CustomStringConvertible {
     var productions: Set<Production>
     
     var transitions: Set<SLRAutomatonTransition> = []
-    let isReducing: Bool
+    
+    var isReducing: Bool { productions.filter {$0.isReduction} .count > 0 }
+    var isShifting: Bool { productions.filter {$0.isShift} .count > 0 }
+    
+    var isShiftReduceConflict: Bool { isReducing && isShifting }
     
     private var didGenerate = false
     
@@ -29,17 +33,11 @@ class SLRAutomatonState: Hashable, CustomStringConvertible {
         self.slrAutomaton = slrAutomaton
         self.productions = closure
         
-        self.isReducing = productions.filter {$0.isReduction} .count > 0
-        
         slrAutomaton.addState(self)
-        
-        Swift.print("init state")
         
     }
     
     func generateFullSLRAutomaton() {
-        
-        Swift.print("Generate full (\(id))")
         
         if (didGenerate) {
             return
@@ -64,8 +62,6 @@ class SLRAutomatonState: Hashable, CustomStringConvertible {
         let advancedProduction = production.withAdvancedMarker()
         
         if let cached = stateCache[transitionSymbol] {
-            
-            Swift.print(cached)
             
             otherState = cached
             
