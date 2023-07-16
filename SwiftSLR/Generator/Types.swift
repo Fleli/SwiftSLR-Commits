@@ -1,7 +1,25 @@
 extension SwiftLibrary {
     
     
-    static func typesInFile() -> String {
+    static func typesInFile(_ includingToken: Bool) -> String {
+        
+        let tail = includingToken ? """
+        
+        struct Token {
+            
+            public var type: String
+            public var content: String
+            
+            public init(_ type: String, _ content: String) {
+                
+                self.type = type
+                self.content = content
+                
+            }
+            
+        }
+        
+        """ : ""
         
         return """
         class SLRNode: CustomStringConvertible {
@@ -23,7 +41,7 @@ extension SwiftLibrary {
             
             func description(_ indent: Int) -> String {
                 
-                let prefix = String(repeating: " ", count: indent)
+                let prefix = String(repeating: "|   ", count: indent / 4)
                 
                 var description = prefix + type.description + "\\n"
                 
@@ -44,27 +62,13 @@ extension SwiftLibrary {
             
             var description: String {
                 switch self {
-                case .terminal(let token):      return token.type + "\t\tContent: \\(token.content)"
+                case .terminal(let token):      return token.type
                 case .nonTerminal(let name):    return name
                 }
             }
             
         }
-        
-        struct Token {
-            
-            public var type: String
-            public var content: String
-            
-            public init(_ type: String, _ content: String) {
-                
-                self.type = type
-                self.content = content
-                
-            }
-            
-        }
-
+        \(tail)
         """
         
     }

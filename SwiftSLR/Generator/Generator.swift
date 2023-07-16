@@ -1,18 +1,14 @@
 class Generator {
     
-    static func generate(from input: String) throws {
+    static func generate(from input: String, includingToken: Bool) throws {
         
         let productions = try interpretInput(input)
         
         let grammar = createGrammarFrom(productions)
         
-        grammar.print()
-        
         let automaton = SLRAutomaton(grammar)
         
-        automaton.print()
-        
-        let code = SwiftGenerator.generate(from: automaton)
+        let code = SwiftGenerator.generate(from: automaton, includingToken)
         
         print(code)
         

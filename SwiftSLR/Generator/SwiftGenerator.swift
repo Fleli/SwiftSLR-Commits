@@ -1,13 +1,13 @@
 class SwiftGenerator {
     
     
-    static func generate(from slrAutomaton: SLRAutomaton) -> String {
+    static func generate(from slrAutomaton: SLRAutomaton, _ includingToken: Bool) -> String {
         
         return """
         
         \(SwiftLibrary.slrClass(generateFunctions(for: slrAutomaton)))
         
-        \(SwiftLibrary.typesInFile())
+        \(SwiftLibrary.typesInFile(includingToken))
         
         """
         
@@ -36,7 +36,7 @@ class SwiftGenerator {
         
         function += "\t\tprint(\"In state \(state.id)\")\n\n"
         
-        function += "\t\twhile true {\n\n"
+        function += "\t\twhile true {\n\t\t\t\n"
         
         for transition in state.transitions {
             function += statement(for: transition)
@@ -44,11 +44,15 @@ class SwiftGenerator {
         
         function += reduceStatement(state)
         
-        function += "\t\t\tbreak\n\n"
+        function += """
+                    break
+                    
+                }
+                
+            }
+            
         
-        function += "\t\t}\n\n"
-        
-        function += "\t}\n\n"
+        """
         
         return function
         
@@ -81,16 +85,21 @@ class SwiftGenerator {
         let reduceCount = reducingProductions.count
         
         if (reduceCount > 1) {
-            fatalError("Reduce/Reduce Conflict")
+            print("The grammar contains a REDUCE/REDUCE conflict:")
+            print("Erroneous state: \(state.id)")
+            reducingProductions.forEach { print($0) }
+            fatalError()
         }
+        
+        var string = ""
         
         if let first = reducingProductions.first {
             
-            return SwiftLibrary.reduce(first.rhs.count, to: first.lhs) + "\n"
+            string += SwiftLibrary.reduce(first.rhs.count, to: first.lhs) + "\n"
             
         }
         
-        return ""
+        return string
         
     }
     

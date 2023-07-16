@@ -1,8 +1,11 @@
 class Grammar {
     
+    typealias TokenSet = Set<Token>
+    typealias NonTerminalTokenSet = [String : TokenSet]
+    
     var initialProduction: Production
     
-    private var productions: [Production] = []
+    var productions: [Production] = []
     
     init(_ initialProduction: Production) {
         

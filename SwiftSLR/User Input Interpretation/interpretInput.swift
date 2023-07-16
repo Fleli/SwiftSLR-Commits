@@ -2,9 +2,6 @@ func interpretInput(_ input: String) throws -> [Production] {
     
     let tokens = try Lexer().lex(input)
     
-    print("Token stream is:")
-    tokens.forEach { print($0) }
-    
     var index = 0
     var productions: [Production] = []
     

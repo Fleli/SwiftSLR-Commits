@@ -1,6 +1,6 @@
 class SLRAutomaton {
     
-    private static var currentStateID = 0
+    static var currentStateID = 0
     
     let grammar: Grammar
     
@@ -26,17 +26,13 @@ class SLRAutomaton {
         
     }
     
-    func fetchState(with initialProduction: Production) -> SLRAutomatonState {
-        
-        let closure = initialProduction.closure
+    func fetchState(with closure: Set<Production>) -> SLRAutomatonState {
         
         if let existingState = findState(with: closure) {
             return existingState
         }
         
-        let newState = SLRAutomatonState(self, from: closure)
-        
-        return newState
+        return SLRAutomatonState(self, from: closure)
         
     }
     

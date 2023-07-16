@@ -7,7 +7,17 @@ class SLRAutomatonState: Hashable, CustomStringConvertible {
     private weak var slrAutomaton: SLRAutomaton!
     
     var id = -1
-    var productions: Set<Production>
+    var productions: Set<Production> {
+        didSet {
+            Swift.print("Updated productions of \(id): {")
+            productions.forEach { Swift.print("\t\($0)") }
+            Swift.print("}\n")
+            fillGroups()
+        }
+    }
+    
+    var terminalGroups: [String : Set<Production>] = [:]
+    var nonTerminalGroups: [String : Set<Production>] = [:]
     
     var transitions: Set<SLRAutomatonTransition> = []
     
@@ -15,6 +25,7 @@ class SLRAutomatonState: Hashable, CustomStringConvertible {
     var isShifting: Bool { productions.filter {$0.isShift} .count > 0 }
     
     var isShiftReduceConflict: Bool { isReducing && isShifting }
+    var isReduceReduceConflict: Bool { productions.filter {$0.isReduction} .count > 1 }
     
     private var didGenerate = false
     
@@ -35,6 +46,55 @@ class SLRAutomatonState: Hashable, CustomStringConvertible {
         
         slrAutomaton.addState(self)
         
+        fillGroups()
+        
+    }
+    
+    private func fillGroups() {
+        
+        nonTerminalGroups = [:]
+        productions.forEach { enterIntoGroup($0) }
+        
+    }
+    
+    private func enterIntoGroup(_ production: Production) {
+        
+        guard let symbol = production.currentSymbol else {
+            return
+        }
+        
+        if case .nonTerminal(let name) = symbol {
+            
+            if (nonTerminalGroups[name] != nil) {
+                
+                nonTerminalGroups[name]?.insert(production)
+                
+            } else {
+                
+                nonTerminalGroups[name] = [production]
+                
+            }
+            
+            return
+            
+        }
+        
+        if case .terminal(let type) = symbol {
+            
+            if (terminalGroups[type] != nil) {
+                
+                terminalGroups[type]?.insert(production)
+                
+            } else {
+                
+                terminalGroups[type] = [production]
+                
+            }
+            
+            return
+            
+        }
+        
     }
     
     func generateFullSLRAutomaton() {
@@ -45,45 +105,43 @@ class SLRAutomatonState: Hashable, CustomStringConvertible {
         
         didGenerate = true
         
-        productions.forEach {
-            propagateAutomatonGeneration(with: $0)
+        nonTerminalGroups.forEach {
+            propagateGeneration(for: $0, isNonTerminal: true)
+        }
+        
+        terminalGroups.forEach {
+            propagateGeneration(for: $0, isNonTerminal: false)
         }
         
     }
     
-    private func propagateAutomatonGeneration(with production: Production) {
+    private func propagateGeneration(for group: (key: String, value: Set<Production>), isNonTerminal: Bool) {
         
-        guard let transitionSymbol = production.currentSymbol else {
-            return
-        }
+        let terminal = Symbol.terminal(group.key)
+        let nonTerminal = Symbol.nonTerminal(group.key)
         
-        let otherState: SLRAutomatonState
+        var closure: Set<Production> = []
         
-        let advancedProduction = production.withAdvancedMarker()
-        
-        if let cached = stateCache[transitionSymbol] {
+        group.value.forEach {
             
-            otherState = cached
-            
-            let union = otherState.productions.union(advancedProduction.closure)
-            
-            if union.count > otherState.productions.count {
-                otherState.didGenerate = false
-                otherState.productions = union
-            }
-            
-        } else {
-            
-            otherState = slrAutomaton.fetchState(with: advancedProduction)
+            let advanced = $0.withAdvancedMarker()
+            closure.formUnion(advanced.closure)
             
         }
         
+        let transitionSymbol = isNonTerminal ? nonTerminal : terminal
+        
+        propagateAutomatonGeneration(with: closure, transitionSymbol)
+        
+    }
+    
+    private func propagateAutomatonGeneration(with closure: Set<Production>, _ transitionSymbol: Symbol) {
+        
+        let otherState = slrAutomaton.fetchState(with: closure)
         otherState.generateFullSLRAutomaton()
         
         let transition = SLRAutomatonTransition(self, otherState, transitionSymbol)
         transitions.insert(transition)
-        
-        stateCache[transitionSymbol] = otherState
         
     }
     
