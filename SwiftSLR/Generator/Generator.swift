@@ -8,7 +8,9 @@ class Generator {
         
         let automaton = SLRAutomaton(grammar)
         
-        automaton.print()
+        let code = SwiftGenerator.generate(from: automaton)
+        
+        print(code)
         
     }
     

@@ -2,9 +2,7 @@
 let input =
     """
     S -> N(E)
-    E -> N(T) T(+) N(E)
-    E -> N(T)
-    T -> T(x)
+    E -> T(x) T(y)
     """
 
 try Generator.generate(from: input)
