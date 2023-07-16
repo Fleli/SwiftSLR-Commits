@@ -2,6 +2,9 @@ func interpretInput(_ input: String) throws -> [Production] {
     
     let tokens = try Lexer().lex(input)
     
+    print("Token stream is:")
+    tokens.forEach { print($0) }
+    
     var index = 0
     var productions: [Production] = []
     
@@ -27,7 +30,7 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
     }
     
     guard
-        tokens[index].type == "lhs",
+        tokens[index].type == "nonTerminal",
         tokens[index + 1].type == "arrow"
     else {
         print("tokens[index] is \(tokens[index]). Next is \(tokens[index + 1])")
@@ -42,16 +45,14 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
     while (index < tokens.count) {
         
         let symbol: Symbol?
-        
         let content = tokens[index].content
-        
-        lazy var wrapped = String(content[content.index(content.startIndex, offsetBy: 2) ..< content.index(before: content.endIndex)])
         
         switch tokens[index].type {
         case "terminal":
-            symbol = .terminal(wrapped)
+            let type = String(content.dropFirst())
+            symbol = .terminal(type)
         case "nonTerminal":
-            symbol = .nonTerminal(wrapped)
+            symbol = .nonTerminal(content)
         default:
             symbol = nil
         }
@@ -67,6 +68,10 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
             
         }
         
+    }
+    
+    while index < tokens.count, tokens[index].type == "newLine" {
+        index += 1
     }
     
     return Production(lhs: lhs, rhs: rhs)

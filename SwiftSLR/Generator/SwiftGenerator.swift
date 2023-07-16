@@ -32,13 +32,21 @@ class SwiftGenerator {
     
     private static func generateFuncFor(_ state: SLRAutomatonState) -> String {
         
-        var function = "\tprivate func state_\(state.id)() {\n\n\t\tprint(\"In state \(state.id)\")\n\n"
+        var function = "\tprivate func state_\(state.id)() {\n\n"
+        
+        function += "\t\tprint(\"In state \(state.id)\")\n\n"
+        
+        function += "\t\twhile true {\n\n"
         
         for transition in state.transitions {
             function += statement(for: transition)
         }
         
         function += reduceStatement(state)
+        
+        function += "\t\t\tbreak\n\n"
+        
+        function += "\t\t}\n\n"
         
         function += "\t}\n\n"
         

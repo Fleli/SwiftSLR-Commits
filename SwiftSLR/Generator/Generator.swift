@@ -6,7 +6,11 @@ class Generator {
         
         let grammar = createGrammarFrom(productions)
         
+        grammar.print()
+        
         let automaton = SLRAutomaton(grammar)
+        
+        automaton.print()
         
         let code = SwiftGenerator.generate(from: automaton)
         
