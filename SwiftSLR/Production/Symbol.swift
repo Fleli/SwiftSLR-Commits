@@ -12,4 +12,8 @@ enum Symbol: Hashable, CustomStringConvertible {
         }
     }
     
+    var isNonTerminal: Bool {
+        return description.first! == "N"
+    }
+    
 }

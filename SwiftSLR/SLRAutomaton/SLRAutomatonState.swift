@@ -8,12 +8,7 @@ class SLRAutomatonState: Hashable, CustomStringConvertible {
     
     var id = -1
     var productions: Set<Production> {
-        didSet {
-            Swift.print("Updated productions of \(id): {")
-            productions.forEach { Swift.print("\t\($0)") }
-            Swift.print("}\n")
-            fillGroups()
-        }
+        didSet { fillGroups() }
     }
     
     var terminalGroups: [String : Set<Production>] = [:]

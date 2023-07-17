@@ -8,6 +8,8 @@ class Generator {
         
         let automaton = SLRAutomaton(grammar)
         
+        automaton.print()
+        
         let code = SwiftGenerator.generate(from: automaton, includingToken)
         
         print(code)

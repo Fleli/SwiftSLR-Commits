@@ -6,6 +6,7 @@ extension SwiftLibrary {
         return """
         
         class SLRParser {
+        
         \(slrParserFields)
         \(slrParserFunctions)
         \(slrStateFunctions)

@@ -34,11 +34,15 @@ class SwiftGenerator {
         
         var function = "\tprivate func state_\(state.id)() {\n\n"
         
-        function += "\t\tprint(\"In state \(state.id)\")\n\n"
-        
         function += "\t\twhile true {\n\t\t\t\n"
         
-        for transition in state.transitions {
+        function += "\t\t\tprint(\"In state \(state.id)\")\n\n"
+        
+        for transition in state.transitions where transition.transitionSymbol.isNonTerminal {
+            function += statement(for: transition)
+        }
+        
+        for transition in state.transitions where !transition.transitionSymbol.isNonTerminal {
             function += statement(for: transition)
         }
         
