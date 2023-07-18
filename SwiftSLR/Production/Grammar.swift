@@ -42,6 +42,8 @@ class Grammar {
             followSets[$0.lhs] = []
         }
         
+        followSets[initialProduction.lhs] = ["$end"]
+        
         calculateFirstSets()
         calculateFollowSets()
         
@@ -83,8 +85,6 @@ class Grammar {
             
         }
         
-        Swift.print(firstSets)
-        
     }
     
     private func calculateFollowSets() {
@@ -114,8 +114,6 @@ class Grammar {
             productionIndex = (productionIndex + 1) % productionCount
             
         }
-        
-        Swift.print(followSets)
         
     }
     

@@ -8,19 +8,13 @@ class Generator {
         
         grammar.calculateFirstAndFollowSets()
         
-        print("Fitrs Sets")
-        
-        grammar.firstSets.forEach { print($0) }
-        
-        print("Follow Sets")
-        
-        grammar.followSets.forEach { print($0) }
-        
         let automaton = SLRAutomaton(grammar)
         
-        let code = SwiftGenerator.generate(from: automaton, includingToken)
+        automaton.print()
         
-        //print(code)
+        let code = SwiftGenerator.generate(from: automaton, includingToken, grammar)
+        
+        print(code)
         
     }
     

@@ -9,11 +9,11 @@ enum SwiftLibrary {
     static func shiftIfTopOfStack(is type: String, to newState: Int) -> String {
         
         return """
-                    if topOfStackIsToken("\(type)") {
-                        shift()
-                        state_\(newState)()
-                        continue
-                    }
+                if topOfStackIsToken("\(type)") {
+                    shift()
+                    pushState(state_\(newState))
+                    return
+                }
                     
         
         """
@@ -21,11 +21,20 @@ enum SwiftLibrary {
     }
     
     
-    static func reduce(_ number: Int, to nonTerminal: String) -> String {
+    static func reduce(_ reducingProduction: Production, _ grammar: Grammar) -> String {
+        
+        let nonTerminal = reducingProduction.lhs
+        let number = reducingProduction.rhs.count
+        
+        let followSetString = "\(grammar.followSets[nonTerminal]!)"
         
         return """
+                if topOfStackIsAmong(\(followSetString)) {
                     reduce(\(number), to: "\(nonTerminal)")
+                    return
+                }
                     
+        
         """
         
     }
@@ -34,10 +43,10 @@ enum SwiftLibrary {
     static func goto(_ newState: Int, ifTopOfStackIs nonTerminal: String) -> String {
         
         return """
-                    if topOfStackIsNonTerminal("\(nonTerminal)") {
-                        state_\(newState)()
-                        continue
-                    }
+                if topOfStackIsNonTerminal("\(nonTerminal)") {
+                    pushState(state_\(newState))
+                    return
+                }
                     
         
         """

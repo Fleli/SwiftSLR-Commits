@@ -1,7 +1,7 @@
 extension SwiftLibrary {
     
     
-    static func slrClass(_ slrStateFunctions: String) -> String {
+    static func slrClass(_ slrStateFunctions: String, _ grammar: Grammar) -> String {
         
         return """
         

@@ -11,15 +11,24 @@ extension SwiftLibrary {
                 self.input = tokens
                 
                 self.stack = []
+                self.states = [state_0]
                 
-                state_0()
+                repeat {
+                    
+                    let current = states[states.count - 1]
+                    current()
+                    
+                    print("Stack: \\(stack)")
+                    print("States: \\(states)")
+                    
+                } while (stack.count == 1) || (stack[1].type != .nonTerminal("Program"))
                 
-                if stack.count != 1 {
+                if stack.count != 2 {
                     print(stack)
                     return nil
                 }
                 
-                return stack[0]
+                return stack[1]
                 
             }
             
@@ -32,30 +41,40 @@ extension SwiftLibrary {
                 
                 index += 1
                 
-                print("After shift: \\(stack)")
+                print("Shifted.")
+                print("-> Stack: \\(stack)")
+                print("-> States: \\(states)")
                 
             }
             
             private func reduce(_ numberOfStates: Int, to nonTerminal: String) {
                 
                 let rhsNodes = Array<SLRNode>(stack[stack.count - numberOfStates ..< stack.count])
-                stack.removeLast(numberOfStates)
                 let newNode = SLRNode(nonTerminal, rhsNodes)
+                
+                stack.removeLast(numberOfStates)
+                states.removeLast(numberOfStates)
                 
                 stack.append(newNode)
                 
-                print("After reduce: \\(stack)")
+                print("Reduce.")
+                print("-> Stack: \\(stack)")
+                print("-> States: \\(states)")
                 
             }
             
             private func topOfStackIsToken(_ type: String) -> Bool {
+                return topOfStackIsAmong([type])
+            }
+            
+            private func topOfStackIsAmong(_ terminals: Set<String>) -> Bool {
                 
                 guard notExhausted else {
                     return false
                 }
                 
-                return input[index].type == type
-                
+                return terminals.contains(input[index].type)
+            
             }
             
             private func topOfStackIsNonTerminal(_ nonTerminal: String) -> Bool {
@@ -70,6 +89,10 @@ extension SwiftLibrary {
                 
                 return name == nonTerminal
                 
+            }
+            
+            private func pushState(_ newState: @escaping () -> ()) {
+                states.append(newState)
             }
         
         """

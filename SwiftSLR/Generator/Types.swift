@@ -55,7 +55,7 @@ extension SwiftLibrary {
             
         }
         
-        enum SLRNodeType: CustomStringConvertible {
+        enum SLRNodeType: CustomStringConvertible, Equatable {
             
             case terminal(_ token: Token)
             case nonTerminal(_ name: String)
@@ -65,6 +65,21 @@ extension SwiftLibrary {
                 case .terminal(let token):      return token.type
                 case .nonTerminal(let name):    return name
                 }
+            }
+            
+            static func == (lhs: SLRNodeType, rhs: SLRNodeType) -> Bool {
+                
+                switch (lhs, rhs) {
+                case (.terminal(let t1), .terminal(let t2)):
+                    return t1.type == t2.type
+                case (.nonTerminal(let n1), .nonTerminal(let n2)):
+                    return n1 == n2
+                default:
+                    break
+                }
+                
+                return false
+                
             }
             
         }

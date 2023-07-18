@@ -1,19 +1,12 @@
 
 let input =
     """
-    Program -> #$init Statements #$end
-    Statements -> Statement
+    Program -> #$init Statements
     Statements -> Statements Statement
-    Statement -> Func
-    Statement -> Decl
-    Closure -> #{ Statements #}
-    Func -> #func #identifier Closure
-    Decl -> #var #identifier #= Expr #;
-    Decl -> #var #identifier #: #identifier #= Expr #;
-    Expr -> Expr #+ Term
-    Expr -> Term
-    Term -> #identifier
-    Term -> #integer
+    Statements -> Statement
+    Statement -> #var
+    Statement -> #func Closure
+    Closure -> #{ Statement #}
     """
 
 try Generator.generate(from: input, includingToken: false)

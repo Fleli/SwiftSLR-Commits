@@ -1,11 +1,11 @@
 class SwiftGenerator {
     
     
-    static func generate(from slrAutomaton: SLRAutomaton, _ includingToken: Bool) -> String {
+    static func generate(from slrAutomaton: SLRAutomaton, _ includingToken: Bool, _ grammar: Grammar) -> String {
         
         return """
         
-        \(SwiftLibrary.slrClass(generateFunctions(for: slrAutomaton)))
+        \(SwiftLibrary.slrClass(generateFunctions(for: slrAutomaton, grammar), grammar))
         
         \(SwiftLibrary.typesInFile(includingToken))
         
@@ -14,13 +14,13 @@ class SwiftGenerator {
     }
     
     
-    private static func generateFunctions(for slrAutomaton: SLRAutomaton) -> String {
+    private static func generateFunctions(for slrAutomaton: SLRAutomaton, _ grammar: Grammar) -> String {
         
         var functions: String = ""
         
         for state in slrAutomaton.states {
             
-            let function = generateFuncFor(state)
+            let function = generateFuncFor(state, grammar)
             functions.append(function)
             
         }
@@ -30,13 +30,13 @@ class SwiftGenerator {
     }
     
     
-    private static func generateFuncFor(_ state: SLRAutomatonState) -> String {
+    private static func generateFuncFor(_ state: SLRAutomatonState, _ grammar: Grammar) -> String {
         
         var function = "\tprivate func state_\(state.id)() {\n\n"
         
-        function += "\t\twhile true {\n\t\t\t\n"
+        function += "\t\tprint(\"In state \(state.id)\")\n\n"
         
-        function += "\t\t\tprint(\"In state \(state.id)\")\n\n"
+        function += reduceStatement(state, grammar)
         
         for transition in state.transitions where transition.transitionSymbol.isNonTerminal {
             function += statement(for: transition)
@@ -46,13 +46,7 @@ class SwiftGenerator {
             function += statement(for: transition)
         }
         
-        function += reduceStatement(state)
-        
         function += """
-                    break
-                    
-                }
-                
             }
             
         
@@ -83,7 +77,7 @@ class SwiftGenerator {
     }
     
     
-    private static func reduceStatement(_ state: SLRAutomatonState) -> String {
+    private static func reduceStatement(_ state: SLRAutomatonState, _ grammar: Grammar) -> String {
         
         let reducingProductions = state.productions.filter { $0.isReduction }
         let reduceCount = reducingProductions.count
@@ -99,7 +93,7 @@ class SwiftGenerator {
         
         if let first = reducingProductions.first {
             
-            string += SwiftLibrary.reduce(first.rhs.count, to: first.lhs) + "\n"
+            string += SwiftLibrary.reduce(first, grammar) + "\n"
             
         }
         

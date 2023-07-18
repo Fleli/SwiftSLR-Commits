@@ -158,8 +158,8 @@
 			isa = PBXGroup;
 			children = (
 				08EAE5092A62D59E00985AC3 /* Generator.swift */,
-				0873E5BB2A636D0000E532E7 /* SwiftGenerator.swift */,
 				0873E5B72A6366AB00E532E7 /* SwiftLibrary.swift */,
+				0873E5BB2A636D0000E532E7 /* SwiftGenerator.swift */,
 				0873E5BD2A6372E500E532E7 /* SLRParser.swift */,
 				0873E5BF2A63736600E532E7 /* SLRParserFields.swift */,
 				0873E5C32A63751D00E532E7 /* SLRParserFunctions.swift */,

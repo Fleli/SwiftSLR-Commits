@@ -100,6 +100,9 @@ class Production: Hashable, CustomStringConvertible {
         return newProduction
     }
     
+    // TODO: De neste funksjonene bør cache resultatene sine etter første call. Har en mistanke om at
+    // disse vil calles svært mange ganger for store grammatikker, men resultatene vil alltid være de samme.
+    
     func nonTerminalIsLast(_ expected: String) -> Bool {
         
         guard case .nonTerminal(let actual) = rhs.last else {
