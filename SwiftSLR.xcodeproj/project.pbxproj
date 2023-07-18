@@ -10,6 +10,7 @@
 		080E8C272A59FCF800B23580 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E8C262A59FCF800B23580 /* main.swift */; };
 		080E8C332A5A163700B23580 /* Production.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E8C322A5A163700B23580 /* Production.swift */; };
 		080E8C352A5A16FD00B23580 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E8C342A5A16FD00B23580 /* Symbol.swift */; };
+		084E6C012A66EA3600CE506B /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084E6C002A66EA3600CE506B /* Convenience.swift */; };
 		0873E5B52A6361A100E532E7 /* Token Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873E5B42A6361A100E532E7 /* Token Hashable.swift */; };
 		0873E5B82A6366AB00E532E7 /* SwiftLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873E5B72A6366AB00E532E7 /* SwiftLibrary.swift */; };
 		0873E5BC2A636D0000E532E7 /* SwiftGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873E5BB2A636D0000E532E7 /* SwiftGenerator.swift */; };
@@ -48,6 +49,7 @@
 		080E8C262A59FCF800B23580 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		080E8C322A5A163700B23580 /* Production.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Production.swift; sourceTree = "<group>"; };
 		080E8C342A5A16FD00B23580 /* Symbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbol.swift; sourceTree = "<group>"; };
+		084E6C002A66EA3600CE506B /* Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Convenience.swift; sourceTree = "<group>"; };
 		0873E5B42A6361A100E532E7 /* Token Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Token Hashable.swift"; sourceTree = "<group>"; };
 		0873E5B72A6366AB00E532E7 /* SwiftLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLibrary.swift; sourceTree = "<group>"; };
 		0873E5BB2A636D0000E532E7 /* SwiftGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftGenerator.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			children = (
 				080E8C262A59FCF800B23580 /* main.swift */,
 				08EAE50B2A62DC5C00985AC3 /* SLRError.swift */,
+				084E6C002A66EA3600CE506B /* Convenience.swift */,
 				08EAE5082A62D59900985AC3 /* Generator */,
 				08EAE5052A62D51800985AC3 /* User Input Interpretation */,
 				08EAE4E82A61C69400985AC3 /* Production */,
@@ -235,6 +238,7 @@
 				08EAE50C2A62DC5C00985AC3 /* SLRError.swift in Sources */,
 				08EAE4ED2A61C7CD00985AC3 /* SLRAutomatonState.swift in Sources */,
 				08EAE4F32A61ECA800985AC3 /* SLRAutomatonTransition.swift in Sources */,
+				084E6C012A66EA3600CE506B /* Convenience.swift in Sources */,
 				0873E5BC2A636D0000E532E7 /* SwiftGenerator.swift in Sources */,
 				08EAE4F52A62BA0300985AC3 /* Print functions.swift in Sources */,
 				0873E5DF2A638B5100E532E7 /* Lexer.swift in Sources */,

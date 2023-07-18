@@ -8,8 +8,8 @@ let input =
     Statement -> Decl
     Closure -> #{ Statements #}
     Func -> #func #identifier Closure
-    Decl -> #var #identifier #= Expr
-    Decl -> #var #identifier #: #identifier #= Expr
+    Decl -> #var #identifier #= Expr #;
+    Decl -> #var #identifier #: #identifier #= Expr #;
     Expr -> Expr #+ Term
     Expr -> Term
     Term -> #identifier

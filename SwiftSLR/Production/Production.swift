@@ -32,6 +32,7 @@ class Production: Hashable, CustomStringConvertible {
     var marker = 0
     
     var terminals: Set<String> = []
+    var nonTerminals: Set<String> = []
     
     var currentSymbol: Symbol? { marker < rhs.count ? rhs[marker] : nil }
     
@@ -49,17 +50,8 @@ class Production: Hashable, CustomStringConvertible {
         
     }
     
-    init(lhs: String, rhs: [Symbol]) {
-        
-        self.lhs = lhs
-        self.rhs = rhs
-        
-        for symbol in rhs {
-            if case .terminal(let terminal) = symbol {
-                terminals.insert(terminal)
-            }
-        }
-        
+    convenience init(lhs: String, rhs: [Symbol]) {
+        self.init(lhs, rhs, 0)
     }
     
     func hash(into hasher: inout Hasher) {
@@ -67,9 +59,19 @@ class Production: Hashable, CustomStringConvertible {
     }
     
     private init(_ lhs: String, _ rhs: [Symbol], _ marker: Int) {
+        
         self.lhs = lhs
         self.rhs = rhs
         self.marker = marker
+        
+        for symbol in rhs {
+            if case .terminal(let terminal) = symbol {
+                terminals.insert(terminal)
+            } else if case .nonTerminal(let nonTerminal) = symbol {
+                nonTerminals.insert(nonTerminal)
+            }
+        }
+        
     }
     
     private func fillClosure(_ closure: inout Set<Production>) {
@@ -96,6 +98,62 @@ class Production: Hashable, CustomStringConvertible {
         let newProduction = Production(lhs, rhs, marker + 1)
         newProduction.grammar = grammar
         return newProduction
+    }
+    
+    func nonTerminalIsLast(_ expected: String) -> Bool {
+        
+        guard case .nonTerminal(let actual) = rhs.last else {
+            return false
+        }
+        
+        return actual == expected
+        
+    }
+    
+    func nonTerminalsAfter(_ nonTerminal: String) -> Set<String> {
+        
+        var nonTerminals: Set<String> = []
+        
+        for index in 0 ..< rhs.count - 1 {
+            
+            let this = rhs[index]
+            let next = rhs[index + 1]
+            
+            guard case .nonTerminal(let this) = this, case .nonTerminal(let next) = next else {
+                continue
+            }
+            
+            if this == nonTerminal {
+                nonTerminals.insert(next)
+            }
+            
+        }
+        
+        return nonTerminals
+        
+    }
+    
+    func terminalsAfter(_ nonTerminal: String) -> Set<String> {
+        
+        var terminals: Set<String> = []
+        
+        for index in 0 ..< rhs.count - 1 {
+            
+            let this = rhs[index]
+            let next = rhs[index + 1]
+            
+            guard case .nonTerminal(let this) = this, case .terminal(let next) = next else {
+                continue
+            }
+            
+            if this == nonTerminal {
+                terminals.insert(next)
+            }
+            
+        }
+        
+        return terminals
+        
     }
     
     static func == (lhs: Production, rhs: Production) -> Bool {

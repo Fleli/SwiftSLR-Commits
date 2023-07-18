@@ -9,15 +9,8 @@ class Grammar {
     var firstSets: [String : Set<String>] = [:]
     var followSets: [String : Set<String>] = [:]
     
-    private var firstSetCount: Int {
-        
-        var count = 0
-        
-        firstSets.forEach { count += $0.value.count }
-        
-        return count
-        
-    }
+    private var firstSetCount: Int { firstSets.map { $0.value.count } .sum() }
+    private var followSetCount: Int { followSets.map { $0.value.count } .sum() }
     
     init(_ initialProduction: Production) {
         
@@ -64,8 +57,6 @@ class Grammar {
             
             let lastIndex = firstSetCounts.count - 1
             
-            Swift.print(lastIndex, productionCount)
-            
             return firstSetCounts.count > productionCount
                 && firstSetCounts[lastIndex] == firstSetCounts[lastIndex - productionCount]
             
@@ -98,7 +89,57 @@ class Grammar {
     
     private func calculateFollowSets() {
         
+        var followSetCounts: [Int] = []
         
+        let productionCount = productions.count
+        
+        var didReachFixedPoint: Bool {
+            
+            let lastIndex = followSetCounts.count - 1
+            
+            return followSetCounts.count > productionCount
+                && followSetCounts[lastIndex] == followSetCounts[lastIndex - productionCount]
+            
+        }
+        
+        var productionIndex = 0
+        
+        while !didReachFixedPoint {
+            
+            let production = productions[productionIndex]
+            
+            supplyFollowSet(from: production)
+            
+            followSetCounts.append(followSetCount)
+            productionIndex = (productionIndex + 1) % productionCount
+            
+        }
+        
+        Swift.print(followSets)
+        
+    }
+    
+    private func supplyFollowSet(from production: Production) {
+        
+        let lhs = production.lhs
+        
+        for nonTerminal in production.nonTerminals {
+            
+            for nextNonTerminal in production.nonTerminalsAfter(nonTerminal) {
+                let otherFirst = firstSets[nextNonTerminal]!
+                followSets[nonTerminal]?.formUnion(otherFirst)
+            }
+            
+            for nextTerminal in production.terminalsAfter(nonTerminal) {
+                followSets[nonTerminal]?.insert(nextTerminal)
+            }
+            
+            if production.nonTerminalIsLast(nonTerminal) {
+                let lhsFollow = followSets[lhs]!
+                followSets[nonTerminal]?.formUnion(lhsFollow)
+            }
+            
+        }
         
     }
     
