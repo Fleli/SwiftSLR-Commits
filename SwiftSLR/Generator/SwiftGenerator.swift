@@ -34,8 +34,6 @@ class SwiftGenerator {
         
         var function = "\tprivate func state_\(state.id)() {\n\n"
         
-        function += "\t\tprint(\"In state \(state.id)\")\n\n"
-        
         function += reduceStatement(state, grammar)
         
         for transition in state.transitions where transition.transitionSymbol.isNonTerminal {
@@ -46,11 +44,7 @@ class SwiftGenerator {
             function += statement(for: transition)
         }
         
-        function += """
-            }
-            
-        
-        """
+        function += "\t}\n\n"
         
         return function
         

@@ -14,7 +14,7 @@ enum SwiftLibrary {
                     pushState(state_\(newState))
                     return
                 }
-                    
+                
         
         """
         
@@ -33,7 +33,7 @@ enum SwiftLibrary {
                     reduce(\(number), to: "\(nonTerminal)")
                     return
                 }
-                    
+                
         
         """
         
@@ -47,7 +47,7 @@ enum SwiftLibrary {
                     pushState(state_\(newState))
                     return
                 }
-                    
+                
         
         """
         

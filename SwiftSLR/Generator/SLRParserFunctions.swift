@@ -18,9 +18,6 @@ extension SwiftLibrary {
                     let current = states[states.count - 1]
                     current()
                     
-                    print("Stack: \\(stack)")
-                    print("States: \\(states)")
-                    
                 } while (stack.count == 1) || (stack[1].type != .nonTerminal("Program"))
                 
                 if stack.count != 2 {
@@ -41,10 +38,6 @@ extension SwiftLibrary {
                 
                 index += 1
                 
-                print("Shifted.")
-                print("-> Stack: \\(stack)")
-                print("-> States: \\(states)")
-                
             }
             
             private func reduce(_ numberOfStates: Int, to nonTerminal: String) {
@@ -56,10 +49,6 @@ extension SwiftLibrary {
                 states.removeLast(numberOfStates)
                 
                 stack.append(newNode)
-                
-                print("Reduce.")
-                print("-> Stack: \\(stack)")
-                print("-> States: \\(states)")
                 
             }
             
