@@ -6,6 +6,8 @@ class Generator {
         
         let grammar = createGrammarFrom(productions)
         
+        grammar.calculateFirstAndFollowSets()
+        
         let automaton = SLRAutomaton(grammar)
         
         automaton.print()
