@@ -18,6 +18,8 @@
 		0873E5C22A6373CB00E532E7 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873E5C12A6373CB00E532E7 /* Types.swift */; };
 		0873E5C42A63751D00E532E7 /* SLRParserFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873E5C32A63751D00E532E7 /* SLRParserFunctions.swift */; };
 		0873E5DF2A638B5100E532E7 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873E5DE2A638B5100E532E7 /* Lexer.swift */; };
+		08ACF5D82A65DF4500974614 /* SLRTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ACF5D72A65DF4500974614 /* SLRTable.swift */; };
+		08ACF5DA2A65DF8000974614 /* SLRAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ACF5D92A65DF8000974614 /* SLRAction.swift */; };
 		08EAE4EB2A61C6A700985AC3 /* SLRAutomaton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EAE4EA2A61C6A700985AC3 /* SLRAutomaton.swift */; };
 		08EAE4ED2A61C7CD00985AC3 /* SLRAutomatonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EAE4EC2A61C7CD00985AC3 /* SLRAutomatonState.swift */; };
 		08EAE4EF2A61CB5100985AC3 /* Hash Conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EAE4EE2A61CB5100985AC3 /* Hash Conformance.swift */; };
@@ -54,6 +56,8 @@
 		0873E5C12A6373CB00E532E7 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		0873E5C32A63751D00E532E7 /* SLRParserFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRParserFunctions.swift; sourceTree = "<group>"; };
 		0873E5DE2A638B5100E532E7 /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
+		08ACF5D72A65DF4500974614 /* SLRTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRTable.swift; sourceTree = "<group>"; };
+		08ACF5D92A65DF8000974614 /* SLRAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRAction.swift; sourceTree = "<group>"; };
 		08EAE4EA2A61C6A700985AC3 /* SLRAutomaton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRAutomaton.swift; sourceTree = "<group>"; };
 		08EAE4EC2A61C7CD00985AC3 /* SLRAutomatonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRAutomatonState.swift; sourceTree = "<group>"; };
 		08EAE4EE2A61CB5100985AC3 /* Hash Conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hash Conformance.swift"; sourceTree = "<group>"; };
@@ -101,8 +105,18 @@
 				08EAE5052A62D51800985AC3 /* User Input Interpretation */,
 				08EAE4E82A61C69400985AC3 /* Production */,
 				08EAE4E92A61C69C00985AC3 /* SLRAutomaton */,
+				08ACF5D62A65DF3C00974614 /* SLRTable */,
 			);
 			path = SwiftSLR;
+			sourceTree = "<group>";
+		};
+		08ACF5D62A65DF3C00974614 /* SLRTable */ = {
+			isa = PBXGroup;
+			children = (
+				08ACF5D72A65DF4500974614 /* SLRTable.swift */,
+				08ACF5D92A65DF8000974614 /* SLRAction.swift */,
+			);
+			path = SLRTable;
 			sourceTree = "<group>";
 		};
 		08EAE4E82A61C69400985AC3 /* Production */ = {
@@ -226,7 +240,9 @@
 				0873E5DF2A638B5100E532E7 /* Lexer.swift in Sources */,
 				08EAE5072A62D56D00985AC3 /* interpretInput.swift in Sources */,
 				0873E5B82A6366AB00E532E7 /* SwiftLibrary.swift in Sources */,
+				08ACF5D82A65DF4500974614 /* SLRTable.swift in Sources */,
 				08EAE50A2A62D59E00985AC3 /* Generator.swift in Sources */,
+				08ACF5DA2A65DF8000974614 /* SLRAction.swift in Sources */,
 				080E8C352A5A16FD00B23580 /* Symbol.swift in Sources */,
 				08EAE4F12A61DF1600985AC3 /* Grammar.swift in Sources */,
 			);

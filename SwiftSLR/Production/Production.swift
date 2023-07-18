@@ -31,6 +31,8 @@ class Production: Hashable, CustomStringConvertible {
     let rhs: [Symbol]
     var marker = 0
     
+    var terminals: Set<String> = []
+    
     var currentSymbol: Symbol? { marker < rhs.count ? rhs[marker] : nil }
     
     var isReduction: Bool { currentSymbol == nil }
@@ -48,8 +50,16 @@ class Production: Hashable, CustomStringConvertible {
     }
     
     init(lhs: String, rhs: [Symbol]) {
+        
         self.lhs = lhs
         self.rhs = rhs
+        
+        for symbol in rhs {
+            if case .terminal(let terminal) = symbol {
+                terminals.insert(terminal)
+            }
+        }
+        
     }
     
     func hash(into hasher: inout Hasher) {

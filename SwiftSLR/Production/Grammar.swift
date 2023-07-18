@@ -1,11 +1,13 @@
 class Grammar {
     
-    typealias TokenSet = Set<Token>
-    typealias NonTerminalTokenSet = [String : TokenSet]
-    
     var initialProduction: Production
     
     var productions: [Production] = []
+    
+    private var terminals: Set<String> = []
+    
+    var firstSets: [String : Set<String>] = [:]
+    var followSets: [String : Set<String>] = [:]
     
     init(_ initialProduction: Production) {
         
@@ -20,11 +22,21 @@ class Grammar {
         production.grammar = self
         productions.append(production)
         
+        terminals.formUnion(production.terminals)
+        
     }
     
     func productionsFor(_ nonTerminal: String) -> [Production] {
         
         return productions.filter { $0.lhs == nonTerminal }
+        
+    }
+    
+    func calculateFirstSets() {
+        
+        firstSets = [:]
+        
+        
         
     }
     
