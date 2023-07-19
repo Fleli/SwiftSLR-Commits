@@ -57,7 +57,7 @@ class SwiftGenerator {
             
         }
         
-        if let acceptingProduction = state.productions.filter { $0.isAccepting }.first {
+        if let _ = state.productions.filter { $0.isAccepting }.first {
             function += "\t\tself.accepted = true\n\t\t\n"
         }
         

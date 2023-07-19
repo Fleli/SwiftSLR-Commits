@@ -60,6 +60,7 @@
 		0873E5DE2A638B5100E532E7 /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		08ACF5D72A65DF4500974614 /* SLRTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRTable.swift; sourceTree = "<group>"; };
 		08ACF5D92A65DF8000974614 /* SLRAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRAction.swift; sourceTree = "<group>"; };
+		08DED8F72A687EA300951F01 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		08EAE4EA2A61C6A700985AC3 /* SLRAutomaton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRAutomaton.swift; sourceTree = "<group>"; };
 		08EAE4EC2A61C7CD00985AC3 /* SLRAutomatonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRAutomatonState.swift; sourceTree = "<group>"; };
 		08EAE4EE2A61CB5100985AC3 /* Hash Conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hash Conformance.swift"; sourceTree = "<group>"; };
@@ -102,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				080E8C262A59FCF800B23580 /* main.swift */,
+				08DED8F72A687EA300951F01 /* README.md */,
 				08EAE50B2A62DC5C00985AC3 /* SLRError.swift */,
 				084E6C002A66EA3600CE506B /* Convenience.swift */,
 				08EAE5082A62D59900985AC3 /* Generator */,
