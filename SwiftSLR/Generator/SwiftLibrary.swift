@@ -1,11 +1,5 @@
 enum SwiftLibrary {
     
-    // TODO: Skriv følgende hjelpefunksjoner
-    //  -   shift()
-    //  -   reduce(:to:)
-    //  -   topOfStackIsToken(:)
-    //  -   topOfStackIsNonTerminal(:)
-    
     static func shiftIfTopOfStack(is type: String, to newState: Int) -> String {
         
         return """
