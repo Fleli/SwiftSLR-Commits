@@ -10,6 +10,8 @@ extension SwiftLibrary {
                 self.index = 0
                 self.input = tokens
                 
+                self.accepted = false
+                
                 self.stack = []
                 self.states = [state_0]
                 
@@ -17,14 +19,14 @@ extension SwiftLibrary {
                     
                     try states[states.count - 1]()
                     
-                } while (stack.count == 1) || (stack[1].type != .nonTerminal("Program"))
+                } while !accepted
                 
-                if stack.count != 2 {
+                if stack.count != 1 {
                     print(stack)
                     return nil
                 }
                 
-                return stack[1]
+                return stack[0]
                 
             }
             

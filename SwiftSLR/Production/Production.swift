@@ -31,6 +31,8 @@ class Production: Hashable, CustomStringConvertible {
     let rhs: [Symbol]
     var marker = 0
     
+    var isAccepting = false
+    
     var terminals: Set<String> = []
     var nonTerminals: Set<String> = []
     

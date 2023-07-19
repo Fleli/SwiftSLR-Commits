@@ -16,6 +16,8 @@ class Grammar {
         
         self.initialProduction = initialProduction
         
+        initialProduction.isAccepting = true
+        
         addProduction(self.initialProduction)
         
     }
@@ -42,7 +44,7 @@ class Grammar {
             followSets[$0.lhs] = []
         }
         
-        followSets[initialProduction.lhs] = ["$end"]
+        followSets[initialProduction.lhs] = []
         
         calculateFirstSets()
         calculateFollowSets()

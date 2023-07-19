@@ -26,16 +26,32 @@ enum SwiftLibrary {
         let nonTerminal = reducingProduction.lhs
         let number = reducingProduction.rhs.count
         
-        let followSetString = "\(grammar.followSets[nonTerminal]!)"
+        let followSet = grammar.followSets[nonTerminal]!
         
-        return """
-                if topOfStackIsAmong(\(followSetString)) {
+        if followSet.isEmpty {
+            
+            return """
                     reduce(\(number), to: "\(nonTerminal)")
                     return
-                }
-                
+                    
+            
+            """
+            
+        } else {
+            
+            let followSetString = "\(followSet)"
+            
+            return """
+                    if topOfStackIsAmong(\(followSetString)) {
+                        reduce(\(number), to: "\(nonTerminal)")
+                        return
+                    }
+                    
+            
+            """
+            
+        }
         
-        """
         
     }
     

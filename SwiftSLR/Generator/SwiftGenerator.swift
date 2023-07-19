@@ -37,8 +37,6 @@ class SwiftGenerator {
         function += "\t\tprint(\"State \(state.id)\")\n\n"
         function += "\t\tprint(\"Stack is \\(stack)\")\n\n"
         
-        function += reduceStatement(state, grammar)
-        
         for transition in state.transitions where transition.transitionSymbol.isNonTerminal {
             function += statement(for: transition)
         }
@@ -47,11 +45,21 @@ class SwiftGenerator {
             function += statement(for: transition)
         }
         
-        function += """
-            let unexpected = tokens[index].content
-            throw ParseError.unexpected(unexpected)
+        function += reduceStatement(state, grammar)
+        
+        if state.id > 0 {
             
-        """
+            function += """
+                    let unexpected = tokens[index].content
+                    throw ParseError.unexpected(unexpected)
+                    
+            """
+            
+        }
+        
+        if let acceptingProduction = state.productions.filter { $0.isAccepting }.first {
+            function += "\t\tself.accepted = true\n\t\t\n"
+        }
         
         function += "\n\t}\n\n"
         

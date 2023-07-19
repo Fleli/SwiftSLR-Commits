@@ -1,7 +1,7 @@
 
 let input =
     /*"""
-    Program -> #$init Statements
+    Program -> Statements #$end
     Statements -> Statements Statement
     Statements -> Statement
     Statement -> Func
@@ -19,11 +19,12 @@ let input =
     Factor -> #identifier
     Factor -> #integer
     Factor -> #( Expr #)
-    """*/
     """
-    P -> #$init S
+    */"""
+    P -> S #$end
     S -> V #= E
     S -> E
+    E -> E #+ V
     E -> V
     V -> #identifier
     V -> #* E
