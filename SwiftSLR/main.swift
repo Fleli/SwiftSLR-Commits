@@ -1,6 +1,6 @@
 
 let input =
-    """
+    /*"""
     Program -> #$init Statements
     Statements -> Statements Statement
     Statements -> Statement
@@ -19,6 +19,14 @@ let input =
     Factor -> #identifier
     Factor -> #integer
     Factor -> #( Expr #)
+    """*/
+    """
+    P -> #$init S
+    S -> V #= E
+    S -> E
+    E -> V
+    V -> #identifier
+    V -> #* E
     """
 
 try Generator.generate(from: input, includingToken: false, location: "/Users/frederikedvardsen/Desktop/", fileName: "parsefile")

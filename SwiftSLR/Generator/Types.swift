@@ -22,6 +22,10 @@ extension SwiftLibrary {
         """ : ""
         
         return """
+        enum ParseError: Error {
+            case unexpected(_ content: String)
+        }
+        
         class SLRNode: CustomStringConvertible {
             
             let type: SLRNodeType

@@ -32,9 +32,10 @@ class SwiftGenerator {
     
     private static func generateFuncFor(_ state: SLRAutomatonState, _ grammar: Grammar) -> String {
         
-        var function = "\tprivate func state_\(state.id)() {\n\n"
+        var function = "\tprivate func state_\(state.id)() throws {\n\n"
         
         function += "\t\tprint(\"State \(state.id)\")\n\n"
+        function += "\t\tprint(\"Stack is \\(stack)\")\n\n"
         
         function += reduceStatement(state, grammar)
         
@@ -46,7 +47,13 @@ class SwiftGenerator {
             function += statement(for: transition)
         }
         
-        function += "\t}\n\n"
+        function += """
+            let unexpected = tokens[index].content
+            throw ParseError.unexpected(unexpected)
+            
+        """
+        
+        function += "\n\t}\n\n"
         
         return function
         

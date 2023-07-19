@@ -5,7 +5,7 @@ extension SwiftLibrary {
         
         return """
             
-            func parse(_ tokens: [Token]) -> SLRNode? {
+            func parse(_ tokens: [Token]) throws -> SLRNode? {
                 
                 self.index = 0
                 self.input = tokens
@@ -15,8 +15,7 @@ extension SwiftLibrary {
                 
                 repeat {
                     
-                    let current = states[states.count - 1]
-                    current()
+                    try states[states.count - 1]()
                     
                 } while (stack.count == 1) || (stack[1].type != .nonTerminal("Program"))
                 
@@ -63,7 +62,7 @@ extension SwiftLibrary {
                 }
                 
                 return terminals.contains(input[index].type)
-            
+                
             }
             
             private func topOfStackIsNonTerminal(_ nonTerminal: String) -> Bool {
@@ -80,7 +79,7 @@ extension SwiftLibrary {
                 
             }
             
-            private func pushState(_ newState: @escaping () -> ()) {
+            private func pushState(_ newState: @escaping () throws -> ()) {
                 states.append(newState)
             }
         
