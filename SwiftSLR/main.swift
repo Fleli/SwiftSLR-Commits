@@ -10,11 +10,15 @@ let input =
     Func -> #func #identifier Closure
     Closure -> #{ Statement #}
     Expr -> Expr #+ Term
+    Expr -> Expr #- Term
     Expr -> Term
     Term -> Term #* Factor
+    Term -> Term #/ Factor
+    Term -> Term #% Factor
     Term -> Factor
     Factor -> #identifier
     Factor -> #integer
+    Factor -> #( Expr #)
     """
 
-try Generator.generate(from: input, includingToken: false)
+try Generator.generate(from: input, includingToken: false, location: "/Users/frederikedvardsen/Desktop/", fileName: "parsefile")

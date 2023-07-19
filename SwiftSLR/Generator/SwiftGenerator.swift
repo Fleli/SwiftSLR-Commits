@@ -34,6 +34,8 @@ class SwiftGenerator {
         
         var function = "\tprivate func state_\(state.id)() {\n\n"
         
+        function += "\t\tprint(\"State \(state.id)\")\n\n"
+        
         function += reduceStatement(state, grammar)
         
         for transition in state.transitions where transition.transitionSymbol.isNonTerminal {
@@ -87,7 +89,7 @@ class SwiftGenerator {
         
         if let first = reducingProductions.first {
             
-            string += SwiftLibrary.reduce(first, grammar) + "\n"
+            string += SwiftLibrary.reduce(first, grammar)
             
         }
         

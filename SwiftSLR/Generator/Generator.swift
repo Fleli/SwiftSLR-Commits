@@ -1,6 +1,8 @@
+import Foundation
+
 class Generator {
     
-    static func generate(from input: String, includingToken: Bool) throws {
+    static func generate(from input: String, includingToken: Bool, location: String, fileName: String) throws {
         
         let productions = try interpretInput(input)
         
@@ -14,7 +16,11 @@ class Generator {
         
         let code = SwiftGenerator.generate(from: automaton, includingToken, grammar)
         
-        print(code)
+        let data = code.data(using: .ascii)
+        let fileManager = FileManager()
+        let didCreate = fileManager.createFile(atPath: location + fileName + ".swift", contents: data)
+        
+        print("Created file: \(didCreate)")
         
     }
     
