@@ -6,9 +6,9 @@ enum Symbol: Hashable, CustomStringConvertible {
     var description: String {
         switch self {
         case .terminal(let string):
-            return "T(\(string))"
+            return string
         case .nonTerminal(let string):
-            return "N(\(string))"
+            return string
         }
     }
     

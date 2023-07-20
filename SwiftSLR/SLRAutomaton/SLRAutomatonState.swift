@@ -16,8 +16,9 @@ class SLRAutomatonState: Hashable, CustomStringConvertible {
     
     var transitions: Set<SLRAutomatonTransition> = []
     
-    var errorMessageNonTerminal: String {
-        return productions.first!.lhs
+    var errorMessage: (nonTerminal: String, expected: Symbol?) {
+        let first = productions.first!
+        return (first.lhs, first.currentSymbol)
     }
     
     var isReducing: Bool { productions.filter {$0.isReduction} .count > 0 }
