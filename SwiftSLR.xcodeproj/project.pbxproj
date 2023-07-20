@@ -83,6 +83,7 @@
 		080E8C1A2A59FCF800B23580 = {
 			isa = PBXGroup;
 			children = (
+				08DED8F72A687EA300951F01 /* README.md */,
 				080E8C252A59FCF800B23580 /* SwiftSLR */,
 				080E8C242A59FCF800B23580 /* Products */,
 			);
@@ -100,7 +101,6 @@
 			isa = PBXGroup;
 			children = (
 				080E8C262A59FCF800B23580 /* main.swift */,
-				08DED8F72A687EA300951F01 /* README.md */,
 				08C19D662A69B00E007549FA /* Semantic Actions.md */,
 				08EAE50B2A62DC5C00985AC3 /* SLRError.swift */,
 				084E6C002A66EA3600CE506B /* Convenience.swift */,
