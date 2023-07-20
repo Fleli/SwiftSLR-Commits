@@ -1,7 +1,7 @@
 
 let input =
     """
-    Program -> Statements
+    Program -> Statements                   { $0 }
     Statements -> Statements Statement
     Statements -> Statement
     Statement -> Func #;

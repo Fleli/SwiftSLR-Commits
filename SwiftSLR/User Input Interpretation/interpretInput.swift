@@ -31,15 +31,19 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
         tokens[index + 1].type == "arrow"
     else {
         print("tokens[index] is \(tokens[index]). Next is \(tokens[index + 1])")
+        tokens.forEach {print($0)}
         return nil
     }
     
     let lhs = tokens[index].content
     var rhs: [Symbol] = []
+    var semantics: [Symbol] = []
     
     index += 2
     
     while (index < tokens.count) {
+        
+        print(index, tokens[index])
         
         let symbol: Symbol?
         let content = tokens[index].content
@@ -50,6 +54,14 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
             symbol = .terminal(type)
         case "nonTerminal":
             symbol = .nonTerminal(content)
+        case "{":
+            print(index, tokens, rhs)
+            if let block = parseSemanticBlock(&index, tokens, rhs) {
+                semantics = block
+            } else {
+                return nil
+            }
+            symbol = nil
         default:
             symbol = nil
         }
@@ -71,6 +83,59 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
         index += 1
     }
     
-    return Production(lhs: lhs, rhs: rhs)
+    return Production(lhs: lhs, rhs: rhs, semantics)
+    
+}
+
+private func parseSemanticBlock(_ index: inout Int, _ tokens: [Token], _ rhs: [Symbol]) -> [Symbol]? {
+    
+    var references: [Int] = []
+    
+    // Current is '{'
+    index += 1
+    
+    while index < tokens.count {
+        
+        let token = tokens[index]
+        
+        print(index, token)
+        
+        let referenceSubString: Substring?
+        
+        switch token.type {
+        case "reference":
+            index += 1
+            referenceSubString = token.content[token.content.index(after: token.content.startIndex) ..< token.content.endIndex]
+            print("reference")
+        case "}":
+            index += 1
+            referenceSubString = nil
+            print("}")
+        default:
+            return nil
+        }
+        
+        if let string = referenceSubString, let reference = Int(string) {
+            references.append(reference)
+        } else {
+            break
+        }
+        
+    }
+    
+    var symbols: [Symbol] = []
+    
+    for reference in references {
+        
+        guard reference < rhs.count else {
+            print("ref is \(reference), rhs is \(rhs)")
+            return nil
+        }
+        
+        symbols.append(rhs[reference])
+        
+    }
+    
+    return symbols
     
 }

@@ -30,6 +30,7 @@ class Production: Hashable, CustomStringConvertible {
     let lhs: String
     let rhs: [Symbol]
     var marker = 0
+    let semantics: [Symbol]
     
     var isAccepting = false
     
@@ -52,19 +53,16 @@ class Production: Hashable, CustomStringConvertible {
         
     }
     
-    convenience init(lhs: String, rhs: [Symbol]) {
-        self.init(lhs, rhs, 0)
+    convenience init(lhs: String, rhs: [Symbol], _ semantics: [Symbol]) {
+        self.init(lhs, rhs, 0, semantics)
     }
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(lhs)
-    }
-    
-    private init(_ lhs: String, _ rhs: [Symbol], _ marker: Int) {
+    private init(_ lhs: String, _ rhs: [Symbol], _ marker: Int, _ semantics: [Symbol]) {
         
         self.lhs = lhs
         self.rhs = rhs
         self.marker = marker
+        self.semantics = semantics
         
         for symbol in rhs {
             if case .terminal(let terminal) = symbol {
@@ -74,6 +72,10 @@ class Production: Hashable, CustomStringConvertible {
             }
         }
         
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(lhs)
     }
     
     private func fillClosure(_ closure: inout Set<Production>) {
@@ -97,7 +99,7 @@ class Production: Hashable, CustomStringConvertible {
     }
     
     func withAdvancedMarker() -> Production {
-        let newProduction = Production(lhs, rhs, marker + 1)
+        let newProduction = Production(lhs, rhs, marker + 1, semantics)
         newProduction.grammar = grammar
         return newProduction
     }
