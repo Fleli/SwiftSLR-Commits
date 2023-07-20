@@ -15,8 +15,6 @@ equal to the specified terminal type.
 
 Note: The grammar's first production's LHS non-terminal should be unique so that it is the only accepting
 production. The LHS symbol will be the only symbol on the stack when parsing is (successfully) completed.
-Also, this production should end with the terminal `$end` (that is, the suffix `#$end` should be added to
-this production).
 
 ## Output
 

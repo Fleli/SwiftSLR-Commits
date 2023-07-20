@@ -50,9 +50,13 @@ class SwiftGenerator {
         if state.id > 0 {
             
             function += """
-                    let unexpected = tokens[index].content
-                    throw ParseError.unexpected(unexpected)
+                    if index < tokens.count {
+                        throw ParseError.unexpected(tokens[index].content)
+                    } else {
+                        throw ParseError.abruptEnd(\"\(state.errorMessageNonTerminal)\")
+                    }
                     
+            
             """
             
         }

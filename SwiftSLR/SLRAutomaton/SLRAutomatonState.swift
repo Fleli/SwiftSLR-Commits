@@ -16,6 +16,10 @@ class SLRAutomatonState: Hashable, CustomStringConvertible {
     
     var transitions: Set<SLRAutomatonTransition> = []
     
+    var errorMessageNonTerminal: String {
+        return productions.first!.lhs
+    }
+    
     var isReducing: Bool { productions.filter {$0.isReduction} .count > 0 }
     var isShifting: Bool { productions.filter {$0.isShift} .count > 0 }
     

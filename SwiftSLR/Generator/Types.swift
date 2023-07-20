@@ -23,6 +23,7 @@ extension SwiftLibrary {
         return """
         enum ParseError: Error {
             case unexpected(_ content: String)
+            case abruptEnd(_ production: String)
         }
         
         class SLRNode: CustomStringConvertible {
