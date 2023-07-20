@@ -4,8 +4,8 @@ let input =
     Program -> Statements
     Statements -> Statements Statement
     Statements -> Statement
-    Statement -> Func
-    Statement -> Declaration
+    Statement -> Func #;
+    Statement -> Declaration #;
     Declaration -> #var #identifier #= Expr
     Func -> #func #identifier Closure
     Closure -> #{ Statement #}

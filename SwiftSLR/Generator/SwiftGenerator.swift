@@ -34,8 +34,9 @@ class SwiftGenerator {
         
         var function = "\tprivate func state_\(state.id)() throws {\n\n"
         
-        function += "\t\tprint(\"State \(state.id)\")\n\n"
-        function += "\t\tprint(\"Stack is \\(stack)\")\n\n"
+        function += "\t\tprint(\"State \(state.id)\")\n\t\t\n"
+        function += "\t\tprint(\"Func stack: \\(states.count)\")\n\t\t\n"
+        function += "\t\tprint(\"Stack is \\(stack)\")\n\t\t\n"
         
         for transition in state.transitions where transition.transitionSymbol.isNonTerminal {
             function += statement(for: transition)
@@ -67,7 +68,7 @@ class SwiftGenerator {
             function += "\t\tself.accepted = true\n\t\t\n"
         }
         
-        function += "\n\t}\n\n"
+        function += "\t}\n\t\n"
         
         return function
         

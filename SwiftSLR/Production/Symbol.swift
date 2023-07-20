@@ -13,7 +13,12 @@ enum Symbol: Hashable, CustomStringConvertible {
     }
     
     var isNonTerminal: Bool {
-        return description.first! == "N"
+        switch self {
+        case .terminal(_):
+            return false
+        case .nonTerminal(_):
+            return true
+        }
     }
     
 }
