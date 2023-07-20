@@ -1,7 +1,7 @@
 
 let input =
     """
-    Program -> Statements #$end
+    Program -> Statements
     Statements -> Statements Statement
     Statements -> Statement
     Statement -> Func

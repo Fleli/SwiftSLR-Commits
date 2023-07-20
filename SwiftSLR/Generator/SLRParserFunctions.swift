@@ -57,10 +57,10 @@ extension SwiftLibrary {
                 return topOfStackIsAmong([type])
             }
             
-            private func topOfStackIsAmong(_ terminals: Set<String>) -> Bool {
+            private func topOfStackIsAmong(_ terminals: Set<String?>) -> Bool {
                 
                 guard notExhausted else {
-                    return false
+                    return terminals.contains(nil)
                 }
                 
                 return terminals.contains(input[index].type)

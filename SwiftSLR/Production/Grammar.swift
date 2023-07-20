@@ -7,7 +7,7 @@ class Grammar {
     private var terminals: Set<String> = []
     
     var firstSets: [String : Set<String>] = [:]
-    var followSets: [String : Set<String>] = [:]
+    var followSets: [String : Set<String?>] = [:]
     
     private var firstSetCount: Int { firstSets.map { $0.value.count } .sum() }
     private var followSetCount: Int { followSets.map { $0.value.count } .sum() }
@@ -44,10 +44,14 @@ class Grammar {
             followSets[$0.lhs] = []
         }
         
-        followSets[initialProduction.lhs] = []
+        followSets[initialProduction.lhs] = [nil]
         
         calculateFirstSets()
         calculateFollowSets()
+        
+        followSets.forEach {
+            Swift.print($0)
+        }
         
     }
     
