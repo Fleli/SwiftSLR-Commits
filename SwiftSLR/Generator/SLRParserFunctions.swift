@@ -33,18 +33,12 @@ extension SwiftLibrary {
             private func shift() {
                 
                 let token = input[index]
-                let node = SLRNode(token)
-                
-                stack.append(node)
-                
+                stack.append(token)
                 index += 1
                 
             }
             
-            private func reduce(_ numberOfStates: Int, to nonTerminal: String) {
-                
-                let rhsNodes = Array<SLRNode>(stack[stack.count - numberOfStates ..< stack.count])
-                let newNode = SLRNode(nonTerminal, rhsNodes)
+            private func reduce(_ numberOfStates: Int, to newNode: some SLRNode) {
                 
                 stack.removeLast(numberOfStates)
                 states.removeLast(numberOfStates)
@@ -67,17 +61,17 @@ extension SwiftLibrary {
                 
             }
             
-            private func topOfStackIsNonTerminal(_ nonTerminal: String) -> Bool {
+            private func topOfStackIsNonTerminal(_ type: String) -> Bool {
                 
                 guard stack.count > 0 else {
                     return false
                 }
                 
-                guard case .nonTerminal(let name) = stack[stack.count - 1].type else {
+                guard let nonTerminal = stack[stack.count - 1] as? SLRNonTerminal else {
                     return false
                 }
                 
-                return name == nonTerminal
+                return type == nonTerminal.type
                 
             }
             

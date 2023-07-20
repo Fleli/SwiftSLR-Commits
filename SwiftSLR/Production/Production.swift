@@ -39,6 +39,30 @@ class Production: Hashable, CustomStringConvertible {
     
     var currentSymbol: Symbol? { marker < rhs.count ? rhs[marker] : nil }
     
+    var lhsInitializer: String {
+        
+        var string = lhs + "("
+        
+        for index in 0 ..< semantics.count {
+            
+            let symbol = semantics[index]
+            
+            let argIndex = "stack.count - \(semantics.count - index)"
+            
+            if case .nonTerminal(let type) = symbol {
+                string += "stack[\(argIndex)] as! \(type), "
+            } else if case .terminal(_) = symbol {
+                string += "stack[\(argIndex)] as! Token, "
+            }
+            
+        }
+        
+        string.removeLast(2)
+        
+        return string + ")"
+        
+    }
+    
     var isReduction: Bool { currentSymbol == nil }
     var isShift: Bool { !isReduction }
     

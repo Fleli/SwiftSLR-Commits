@@ -22,29 +22,19 @@ enum SwiftLibrary {
         
         let followSet = grammar.followSets[nonTerminal]!
         
-        if followSet.isEmpty {
-            
-            return """
-                    reduce(\(number), to: "\(nonTerminal)")
-                    return
+        let newNode = reducingProduction.lhsInitializer
+        
+        let followSetString = "\(followSet)"
+        
+        return """
                     
-            
-            """
-            
-        } else {
-            
-            let followSetString = "\(followSet)"
-            
-            return """
                     if topOfStackIsAmong(\(followSetString)) {
-                        reduce(\(number), to: "\(nonTerminal)")
+                        reduce(\(number), to: \(newNode))
                         return
                     }
                     
             
             """
-            
-        }
         
         
     }

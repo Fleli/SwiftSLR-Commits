@@ -1,25 +1,13 @@
 
 let input =
     """
-    Program -> Statements                   { $0 }
-    Statements -> Statements Statement
-    Statements -> Statement
-    Statement -> Func #;
-    Statement -> Declaration #;
-    Declaration -> #var #identifier #= Expr
-    Func -> #func #identifier Closure
-    Closure -> #{ Statement #}
-    Expr -> Expr #+ Term
-    Expr -> Expr #- Term
-    Expr -> Term
-    Term -> Term #* Factor
-    Term -> Term #/ Factor
-    Term -> Term #% Factor
-    Term -> Factor
-    Factor -> #identifier
-    Factor -> #integer
-    Factor -> #- Factor
-    Factor -> #( Expr #)
+    Program -> StatementList                        { $0 }
+    StatementList -> StatementList Statement        { $0 $1 }
+    StatementList -> Statement                      { $0 }
+    Statement -> Func                               { $0 }
+    Statement -> Decl                               { $0 }
+    Func -> #func #identifier                       { $1 }
+    Decl -> #var #identifier #= #identifier #;      { $0 $1 $3 }
     """
     /*"""
     P -> S #$end
