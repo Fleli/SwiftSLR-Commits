@@ -37,7 +37,7 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
     
     let lhs = tokens[index].content
     var rhs: [Symbol] = []
-    var semantics: [Symbol] = []
+    var semantics: [Int] = []
     
     index += 2
     
@@ -87,7 +87,7 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
     
 }
 
-private func parseSemanticBlock(_ index: inout Int, _ tokens: [Token], _ rhs: [Symbol]) -> [Symbol]? {
+private func parseSemanticBlock(_ index: inout Int, _ tokens: [Token], _ rhs: [Symbol]) -> [Int]? {
     
     var references: [Int] = []
     
@@ -123,19 +123,6 @@ private func parseSemanticBlock(_ index: inout Int, _ tokens: [Token], _ rhs: [S
         
     }
     
-    var symbols: [Symbol] = []
-    
-    for reference in references {
-        
-        guard reference < rhs.count else {
-            print("ref is \(reference), rhs is \(rhs)")
-            return nil
-        }
-        
-        symbols.append(rhs[reference])
-        
-    }
-    
-    return symbols
+    return references
     
 }

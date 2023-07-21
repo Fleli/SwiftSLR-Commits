@@ -30,7 +30,7 @@ class Production: Hashable, CustomStringConvertible {
     let lhs: String
     let rhs: [Symbol]
     var marker = 0
-    let semantics: [Symbol]
+    let semantics: [Int]
     
     var isAccepting = false
     
@@ -45,9 +45,11 @@ class Production: Hashable, CustomStringConvertible {
         
         for index in 0 ..< semantics.count {
             
-            let symbol = semantics[index]
+            let reference = semantics[index]
             
-            let argIndex = "stack.count - \(semantics.count - index)"
+            let argIndex = "stack.count - \(rhs.count - reference)"
+            
+            let symbol = rhs[reference]
             
             if case .nonTerminal(let type) = symbol {
                 string += "stack[\(argIndex)] as! \(type), "
@@ -77,11 +79,11 @@ class Production: Hashable, CustomStringConvertible {
         
     }
     
-    convenience init(lhs: String, rhs: [Symbol], _ semantics: [Symbol]) {
+    convenience init(lhs: String, rhs: [Symbol], _ semantics: [Int]) {
         self.init(lhs, rhs, 0, semantics)
     }
     
-    private init(_ lhs: String, _ rhs: [Symbol], _ marker: Int, _ semantics: [Symbol]) {
+    private init(_ lhs: String, _ rhs: [Symbol], _ marker: Int, _ semantics: [Int]) {
         
         self.lhs = lhs
         self.rhs = rhs
