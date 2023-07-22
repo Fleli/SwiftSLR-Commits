@@ -1,13 +1,13 @@
 
 let input =
     """
-    Program -> StatementList                        { $0 }
-    StatementList -> StatementList Statement        { $0 $1 }
-    StatementList -> Statement                      { $0 }
-    Statement -> Func                               { $0 }
-    Statement -> Decl                               { $0 }
-    Func -> #func #identifier                       { $1 }
-    Decl -> #var #identifier #= #identifier #;      { $0 $1 $3 }
+    Program -> StatementList
+    StatementList -> StatementList Statement
+    StatementList -> Statement
+    Statement -> Func
+    Statement -> Decl
+    Func -> #func #identifier #{ StatementList #}
+    Decl -> #var #identifier #= #identifier #;
     """
     /*"""
     P -> S #$end
@@ -19,4 +19,4 @@ let input =
     V -> #* E
     """*/
 
-try Generator.generate(from: input, includingToken: false, location: "/Users/frederikedvardsen/Desktop/", fileName: "parsefile")
+try Generator.generate(from: input, includingToken: false, location: "/Users/frederikedvardsen/Desktop/", parseFile: "parsefile", typeFilePrefix: "Type_")

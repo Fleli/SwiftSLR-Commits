@@ -55,7 +55,6 @@
 		0873E5BF2A63736600E532E7 /* SLRParserFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRParserFields.swift; sourceTree = "<group>"; };
 		0873E5C12A6373CB00E532E7 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		0873E5C32A63751D00E532E7 /* SLRParserFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRParserFunctions.swift; sourceTree = "<group>"; };
-		08C19D662A69B00E007549FA /* Semantic Actions.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Semantic Actions.md"; sourceTree = "<group>"; };
 		08C19D6D2A69B8BF007549FA /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		08DED8F72A687EA300951F01 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		08EAE4EA2A61C6A700985AC3 /* SLRAutomaton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLRAutomaton.swift; sourceTree = "<group>"; };
@@ -101,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				080E8C262A59FCF800B23580 /* main.swift */,
-				08C19D662A69B00E007549FA /* Semantic Actions.md */,
 				08EAE50B2A62DC5C00985AC3 /* SLRError.swift */,
 				084E6C002A66EA3600CE506B /* Convenience.swift */,
 				08EAE5082A62D59900985AC3 /* Generator */,

@@ -21,15 +21,12 @@ enum SwiftLibrary {
         let number = reducingProduction.rhs.count
         
         let followSet = grammar.followSets[nonTerminal]!
-        
-        let newNode = reducingProduction.lhsInitializer
-        
         let followSetString = "\(followSet)"
         
         return """
                     
                     if topOfStackIsAmong(\(followSetString)) {
-                        reduce(\(number), to: \(newNode))
+                        reduce(\(number), to: "\(nonTerminal)")
                         return
                     }
                     

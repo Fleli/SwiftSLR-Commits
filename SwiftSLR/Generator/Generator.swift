@@ -2,7 +2,7 @@ import Foundation
 
 class Generator {
     
-    static func generate(from input: String, includingToken: Bool, location: String, fileName: String) throws {
+    static func generate(from input: String, includingToken: Bool, location: String, parseFile: String, typeFilePrefix: String) throws {
         
         let productions = try interpretInput(input)
         
@@ -18,7 +18,7 @@ class Generator {
         
         let data = code.data(using: .ascii)
         let fileManager = FileManager()
-        let didCreate = fileManager.createFile(atPath: location + fileName + ".swift", contents: data)
+        let didCreate = fileManager.createFile(atPath: location + parseFile + ".swift", contents: data)
         
         print("Created file: \(didCreate)")
         

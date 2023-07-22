@@ -30,7 +30,6 @@ class Production: Hashable, CustomStringConvertible {
     let lhs: String
     let rhs: [Symbol]
     var marker = 0
-    let semantics: [Int]
     
     var isAccepting = false
     
@@ -38,32 +37,6 @@ class Production: Hashable, CustomStringConvertible {
     var nonTerminals: Set<String> = []
     
     var currentSymbol: Symbol? { marker < rhs.count ? rhs[marker] : nil }
-    
-    var lhsInitializer: String {
-        
-        var string = lhs + "("
-        
-        for index in 0 ..< semantics.count {
-            
-            let reference = semantics[index]
-            
-            let argIndex = "stack.count - \(rhs.count - reference)"
-            
-            let symbol = rhs[reference]
-            
-            if case .nonTerminal(let type) = symbol {
-                string += "stack[\(argIndex)] as! \(type), "
-            } else if case .terminal(_) = symbol {
-                string += "stack[\(argIndex)] as! Token, "
-            }
-            
-        }
-        
-        string.removeLast(2)
-        
-        return string + ")"
-        
-    }
     
     var isReduction: Bool { currentSymbol == nil }
     var isShift: Bool { !isReduction }
@@ -79,16 +52,15 @@ class Production: Hashable, CustomStringConvertible {
         
     }
     
-    convenience init(lhs: String, rhs: [Symbol], _ semantics: [Int]) {
-        self.init(lhs, rhs, 0, semantics)
+    convenience init(lhs: String, rhs: [Symbol]) {
+        self.init(lhs, rhs, 0)
     }
     
-    private init(_ lhs: String, _ rhs: [Symbol], _ marker: Int, _ semantics: [Int]) {
+    private init(_ lhs: String, _ rhs: [Symbol], _ marker: Int) {
         
         self.lhs = lhs
         self.rhs = rhs
         self.marker = marker
-        self.semantics = semantics
         
         for symbol in rhs {
             if case .terminal(let terminal) = symbol {
@@ -125,7 +97,7 @@ class Production: Hashable, CustomStringConvertible {
     }
     
     func withAdvancedMarker() -> Production {
-        let newProduction = Production(lhs, rhs, marker + 1, semantics)
+        let newProduction = Production(lhs, rhs, marker + 1)
         newProduction.grammar = grammar
         return newProduction
     }

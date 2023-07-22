@@ -28,21 +28,32 @@ extension SwiftLibrary {
             case abruptEnd(_ nonTerminal: String, _ expected: String)
         }
         
-        protocol SLRNode: CustomStringConvertible {}
-        
-        class SLRNonTerminal: SLRNode, CustomStringConvertible {
+        class SLRNode: CustomStringConvertible {
             
             let type: String
+            let children: [SLRNode]
             
-            var description: String { type }
+            var description: String { "\\(type)" }
             
-            init(_ type: String) {
+            func printFullDescription(_ indent: Int) {
+                print(String(repeating: "|   ", count: indent) + type)
+                for child in children {
+                    child.printFullDescription(indent + 1)
+                }
+            }
+            
+            init(_ type: String, _ children: [SLRNode]) {
                 self.type = type
+                self.children = children
+            }
+            
+            init(_ token: Token) {
+                self.type = token.type
+                self.children = []
             }
             
         }
         
-        extension Token: SLRNode {}
         \(tail)
         """
         

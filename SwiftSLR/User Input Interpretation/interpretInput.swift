@@ -37,7 +37,6 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
     
     let lhs = tokens[index].content
     var rhs: [Symbol] = []
-    var semantics: [Int] = []
     
     index += 2
     
@@ -54,14 +53,6 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
             symbol = .terminal(type)
         case "nonTerminal":
             symbol = .nonTerminal(content)
-        case "{":
-            print(index, tokens, rhs)
-            if let block = parseSemanticBlock(&index, tokens, rhs) {
-                semantics = block
-            } else {
-                return nil
-            }
-            symbol = nil
         default:
             symbol = nil
         }
@@ -83,46 +74,6 @@ private func parseProduction(_ index: inout Int, _ tokens: [Token]) -> Productio
         index += 1
     }
     
-    return Production(lhs: lhs, rhs: rhs, semantics)
-    
-}
-
-private func parseSemanticBlock(_ index: inout Int, _ tokens: [Token], _ rhs: [Symbol]) -> [Int]? {
-    
-    var references: [Int] = []
-    
-    // Current is '{'
-    index += 1
-    
-    while index < tokens.count {
-        
-        let token = tokens[index]
-        
-        print(index, token)
-        
-        let referenceSubString: Substring?
-        
-        switch token.type {
-        case "reference":
-            index += 1
-            referenceSubString = token.content[token.content.index(after: token.content.startIndex) ..< token.content.endIndex]
-            print("reference")
-        case "}":
-            index += 1
-            referenceSubString = nil
-            print("}")
-        default:
-            return nil
-        }
-        
-        if let string = referenceSubString, let reference = Int(string) {
-            references.append(reference)
-        } else {
-            break
-        }
-        
-    }
-    
-    return references
+    return Production(lhs: lhs, rhs: rhs)
     
 }

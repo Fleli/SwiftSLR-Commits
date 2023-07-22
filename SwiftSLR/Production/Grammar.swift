@@ -80,6 +80,7 @@ class Grammar {
             let firstRhs = production.rhs[0]
             
             if case .nonTerminal(let rhsNonTerminal) = firstRhs {
+                Swift.print("LHS nonTerminal is {\(rhsNonTerminal)}")
                 let otherFirst = firstSets[rhsNonTerminal]!
                 firstSets[lhs]?.formUnion(otherFirst)
             } else if case .terminal(let terminal) = firstRhs {
