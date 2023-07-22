@@ -9,8 +9,7 @@ that describes the operation of the parser.
 
 Use the multi-line string `input` in `main.swift` to define your grammar. Each line should contain at most
 one production. A production has a non-terminal (regex `[A-Z][a-zA-Z]*`) on the left. That non-terminal is
-followed by an arrow (`->`) and one or more symbols on the RHS of the production. Then some number of
-references ($0, $1, ...) is expected to inform the parser how non-terminals are related.
+followed by an arrow (`->`) and one or more symbols on the RHS of the production.
 
 Each symbol is a non-terminal (as described) or terminal (prefixed with `#`). Terminals will match whenever 
 a token's type is equal to the specified terminal type. 
@@ -22,8 +21,7 @@ production. The LHS symbol will be the only symbol on the stack when parsing is 
 
 The parser generator will produce an SLR parser as its output. The SLR parser is found in an `SLRParser`
 class. To use the parser, initialize such an object (`let parser = SLRParser()`) and call its `parse`
-method. It expects an array of `Token` objects and produces some object conforming to the SLRNode protocol.
-These types must (for now) be defined by the user.
+method. It expects an array of `Token` objects and produces an SLRNode containing the whole parse tree.
 
 ## Integration with SwiftLex
 

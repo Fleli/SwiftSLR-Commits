@@ -2,7 +2,7 @@ import Foundation
 
 class Generator {
     
-    static func generate(from input: String, includingToken: Bool, location: String, parseFile: String, typeFilePrefix: String) throws {
+    static func generate(from input: String, includingToken: Bool, location: String, parseFile: String) throws {
         
         let productions = try interpretInput(input)
         
@@ -14,7 +14,7 @@ class Generator {
         
         automaton.print()
         
-        let code = SwiftGenerator.generate(from: automaton, includingToken, grammar)
+        let code = SwiftGenerator.generate(parseFile, from: automaton, includingToken, grammar)
         
         let data = code.data(using: .ascii)
         let fileManager = FileManager()
