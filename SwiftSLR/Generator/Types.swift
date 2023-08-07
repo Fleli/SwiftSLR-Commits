@@ -33,6 +33,8 @@ extension SwiftLibrary {
             let type: String
             let children: [SLRNode]
             
+            let token: Token?
+            
             var description: String { "\\(type)" }
             
             func printFullDescription(_ indent: Int) {
@@ -45,11 +47,13 @@ extension SwiftLibrary {
             init(_ type: String, _ children: [SLRNode]) {
                 self.type = type
                 self.children = children
+                self.token = nil
             }
             
             init(_ token: Token) {
                 self.type = token.type
                 self.children = []
+                self.token = token
             }
             
         }

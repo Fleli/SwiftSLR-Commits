@@ -6,19 +6,24 @@ let input =
     StatementList -> StatementList Statement
     StatementList -> Statement
     
-    Statement -> Declaration
+    Statement -> Enum
+    Statement -> Nested
     
-    Declaration -> DeclarationPrefix #identifier #: Type #;
-    Declaration -> DeclarationPrefix #identifier #: Type #= Expression #;
-    Declaration -> DeclarationPrefix #identifier #= Expression #;
+    Enum -> #enum #identifier #{ EnumList #}
     
-    DeclarationPrefix -> #var
-    DeclarationPrefix -> #let
+    EnumList -> EnumList EnumCase
+    EnumList -> EnumCase
     
-    Type -> #identifier
-    Type -> Type #-> Type
+    EnumCase -> #case #terminal
+    EnumCase -> #case #nonTerminal
     
-    Expression -> #integer
+    Nested -> #nested #identifier #{ NestList #}
+    
+    NestList -> NestList NestCase
+    NestList -> NestCase
+    
+    NestCase ->
+    
     """
 
 try Generator.generate(from: input, includingToken: false, location: "/Users/frederikedvardsen/Desktop/", parseFile: "parsefile")
