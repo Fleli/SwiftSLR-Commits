@@ -76,6 +76,8 @@ class Grammar {
             
             let production = productions[productionIndex]
             
+            Swift.print(productionIndex, production)
+            
             let lhs = production.lhs
             let firstRhs = production.rhs[0]
             

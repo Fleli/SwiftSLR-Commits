@@ -37,9 +37,12 @@ SwiftSLR is divided into 5 steps:
 --------|-------------------|-------------------|------------
 1       | `String`          | `[Production]`    | Parse the user's input to see each production
 2       | `[Production]`    | `Grammar`         | Create a grammar from the array of productions
-3       |                   |           	    | Calculate FIRST and FOLLOW sets for each non-terminal
+3       | `Grammar`         | `Grammar`    	    | Calculate FIRST and FOLLOW sets for each non-terminal
 4       | `Grammar`         | `SLRAutomaton`    | Use the grammar to create an SLR automaton
 5       | `SLRAutomaton`    | `String`          | Generate code from the automaton
 
 The `String` produced in step 5 is written to a file specified by the user.
 
+## Future Updates
+
+SwiftSLR currently does not accept empty productions. Fixing this is on the agenda since it is an important feature.
