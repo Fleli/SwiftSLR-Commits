@@ -152,21 +152,46 @@ class Grammar {
             
             Swift.print(productionIndex, production)
             
-            let lhs = production.lhs
-            let firstRhs = production.rhs[0]
-            
-            if case .nonTerminal(let rhsNonTerminal) = firstRhs {
-                Swift.print("LHS nonTerminal is {\(rhsNonTerminal)}")
-                let otherFirst = firstSets[rhsNonTerminal]!
-                firstSets[lhs]?.formUnion(otherFirst)
-            } else if case .terminal(let terminal) = firstRhs {
-                firstSets[lhs]?.insert(terminal)
+            // Only look at productions with a non-empty RHS
+            if production.rhs.count > 0 {
+                updateFirstSet(of: production.lhs, with: production.rhs)
             }
             
             firstSetCounts.append(firstSetCount)
             productionIndex = (productionIndex + 1) % productionCount
             
         }
+        
+    }
+    
+    private func updateFirstSet(of lhs: String, with rhs: [Symbol]) {
+        
+        if case .nonTerminal(let firstNonTerminal) = rhs[0] {
+            
+            let otherFirst = firstSets[firstNonTerminal]!
+            firstSets[lhs]?.formUnion(otherFirst)
+            
+            guard nullableNonTerminals.contains(firstNonTerminal) && rhs.count >= 2 else {
+                return
+            }
+            
+            if case .nonTerminal(let nextNonTerminal) = rhs[1] {
+                
+                let otherFirst = firstSets[nextNonTerminal]!
+                firstSets[lhs]?.formUnion(otherFirst)
+                
+            } else if case .terminal(let terminal) = rhs[1] {
+                
+                firstSets[lhs]?.insert(terminal)
+                
+            }
+            
+        } else if case .terminal(let terminal) = rhs[0] {
+            
+            firstSets[lhs]?.insert(terminal)
+            
+        }
+        
         
     }
     
