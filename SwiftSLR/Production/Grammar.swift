@@ -6,9 +6,11 @@ class Grammar {
     
     private var terminals: Set<String> = []
     
-    var firstSets: [String : Set<String>] = [:]
-    var followSets: [String : Set<String?>] = [:]
+    internal private(set) var nullableNonTerminals: Set<String> = []
+    internal private(set) var firstSets: [String : Set<String>] = [:]
+    internal private(set) var followSets: [String : Set<String?>] = [:]
     
+    private var nullabilityCount: Int { nullableNonTerminals.count }
     private var firstSetCount: Int { firstSets.map { $0.value.count } .sum() }
     private var followSetCount: Int { followSets.map { $0.value.count } .sum() }
     
@@ -39,6 +41,8 @@ class Grammar {
     
     func calculateFirstAndFollowSets() {
         
+        nullableNonTerminals = []
+        
         productions.forEach {
             firstSets[$0.lhs] = []
             followSets[$0.lhs] = []
@@ -46,12 +50,81 @@ class Grammar {
         
         followSets[initialProduction.lhs] = [nil]
         
+        calculateNullability()
         calculateFirstSets()
         calculateFollowSets()
         
         followSets.forEach {
             Swift.print($0)
         }
+        
+    }
+    
+    private func calculateNullability() {
+        
+        let nonTerminalStrings = productions.filter { $0.rhs.count == 0 } .map { $0.lhs }
+        nullableNonTerminals = Set<String>(nonTerminalStrings)
+        
+        var nullCounts = [nullableNonTerminals.count]
+        var didWrapAround = false
+        
+        var didReachFixedPoint: Bool {
+            
+            let lastIndex = nullCounts.count - 1
+            
+            Swift.print(nullCounts, nullabilityCount)
+            
+            Swift.print(lastIndex)
+            
+            return didWrapAround
+                && nullCounts[lastIndex] == nullCounts[lastIndex - productions.count]
+            
+        }
+        
+        var productionIndex = 0
+        
+        while !didReachFixedPoint {
+            
+            let production = productions[productionIndex]
+            
+            if indirectlyNullable(production) {
+                let lhs = production.lhs
+                Swift.print(lhs, "is nullable!")
+                nullableNonTerminals.insert(lhs)
+                Swift.print(nullableNonTerminals)
+            }
+            
+            let adjusted = (productionIndex + 1) % (productions.count)
+            
+            if adjusted != productionIndex + 1 {
+                didWrapAround = true
+            }
+            
+            productionIndex = adjusted
+            nullCounts.append(nullabilityCount)
+            
+        }
+        
+    }
+    
+    private func indirectlyNullable(_ production: Production) -> Bool {
+        
+        for index in 0 ..< production.rhs.count {
+            
+            switch production.rhs[index] {
+            case .nonTerminal(let nonTerminal):
+                
+                guard nullableNonTerminals.contains(nonTerminal) else {
+                    return false
+                }
+                
+            case .terminal(_):
+                return false
+            }
+            
+        }
+        
+        return true
         
     }
     
@@ -65,6 +138,7 @@ class Grammar {
             
             let lastIndex = firstSetCounts.count - 1
             
+            // Hvis gått en hel runde uten oppdatering (periode på productionCount) så har vi et fixed point.
             return firstSetCounts.count > productionCount
                 && firstSetCounts[lastIndex] == firstSetCounts[lastIndex - productionCount]
             
